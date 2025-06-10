@@ -1,33 +1,18 @@
 import React, { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import VerbForms from "./components/VerbForms";
+import Home from "./components/Home";
+import FormDetail from "./components/FormDetail";
 
 function App() {
-  const [section, setSection] = useState("home");
-
   return (
-    <div style={{ textAlign: "center", marginTop: "2rem" }}>
-      <h1>Arabic Helper</h1>
-      <p>Strengthen your Arabic practice with tailored exercises.</p>
-
-      {section === "home" && (
-        <div style={{ marginTop: "2rem" }}>
-          <button
-            onClick={() => {
-              setSection("verb-forms");
-            }}
-            style={{
-              padding: "1rem 2rem",
-              fontSize: "1rem",
-              cursor: "pointer",
-            }}
-          >
-            Verb Forms
-          </button>
-        </div>
-      )}
-
-      {section === "verb-forms" && <VerbForms />}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/verb-forms" element={<VerbForms />} />
+        <Route path="/verb-forms/:formId" element={<FormDetail />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
