@@ -1,4 +1,7 @@
 export interface VerbForm {
+  id: string;
+  name: string;
+  meaning: string;
   root: string;
   forms: {
     tense: "past" | "present" | "command";
@@ -8,6 +11,9 @@ export interface VerbForm {
 
 export const verbFormsData: VerbForm[] = [
   {
+    id: "form-i",
+    name: "Form I",
+    meaning: "Basic Active",
     root: "فعل",
     forms: [
       { tense: "past", verb: "فَعَلَ" },
