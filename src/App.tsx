@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import VerbForms from "./components/VerbForms";
 import Home from "./components/Home";
 import FormDetail from "./components/FormDetail";
+import "./theme.css";
 
 function App() {
   return (

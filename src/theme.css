@@ -1,0 +1,36 @@
+:root {
+  --primary-color: #800020; /* maroon/burgundy */
+  --secondary-color: #ffd700; /* gold */
+  --font-color: #ffffff; /* white */
+}
+
+body {
+  background-color: #fff; /* overall background */
+  color: var(--primary-color); /* default text color */
+  font-family: sans-serif;
+}
+
+button {
+  background-color: var(--primary-color);
+  color: var(--font-color);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--primary-color);
+}
+
+p {
+  color: #333;
+}
