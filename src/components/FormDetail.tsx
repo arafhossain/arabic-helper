@@ -17,10 +17,10 @@ const FormDetail = () => {
 
   if (!formData) return <div>Form not found.</div>;
 
-  const currentCard = formData.forms[learningIndex];
+  const currentCard = formData.learnSet[learningIndex];
 
   const handleNext = () => {
-    if (learningIndex < formData.forms.length - 1) {
+    if (learningIndex < formData.learnSet.length - 1) {
       setLearningIndex((prev) => prev + 1);
       setShowAnswer(false);
     } else {
@@ -41,11 +41,11 @@ const FormDetail = () => {
       />
       {!learningMode && (
         <div style={{ textAlign: "center", marginTop: "2rem" }}>
-          <h2>{formData.name}</h2>
+          <h2 style={{ marginBottom: "0" }}>{formData.name}</h2>
           <p style={{ fontStyle: "italic" }}>{formData.meaning}</p>
 
           <div style={{ marginTop: "2rem" }}>
-            {formData.forms.map((form, idx) => (
+            {formData.learnSet.map((form, idx) => (
               <div
                 key={idx}
                 style={{
@@ -85,8 +85,10 @@ const FormDetail = () => {
             alignItems: "center",
           }}
         >
+          <h2 style={{ marginBottom: "0" }}>{formData.name}</h2>
+          <p style={{ fontStyle: "italic" }}>{formData.meaning}</p>
           <p style={{ fontSize: "1rem", marginBottom: "1rem" }}>
-            Card {learningIndex + 1} of {formData.forms.length}
+            Card {learningIndex + 1} of {formData.learnSet.length}
           </p>
 
           <div
@@ -133,7 +135,7 @@ const FormDetail = () => {
               cursor: "pointer",
             }}
           >
-            {learningIndex < formData.forms.length - 1 ? "Next" : "Finish"}
+            {learningIndex < formData.learnSet.length - 1 ? "Next" : "Finish"}
           </button>
         </div>
       )}
