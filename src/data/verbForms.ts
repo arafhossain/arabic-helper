@@ -4,10 +4,7 @@ export interface VerbForm {
   name: string;
   meaning: string;
   root: string;
-  learnSet: {
-    tense: "past" | "present" | "command";
-    verb: string;
-  }[];
+  learnSet: LearnCard[];
   quizSet: {
     baseVerb: string;
     tenses: {
@@ -16,6 +13,11 @@ export interface VerbForm {
       command: string;
     };
   }[];
+}
+
+export interface LearnCard {
+  tense: "past" | "present" | "command";
+  verb: string;
 }
 
 export const verbFormsData: VerbForm[] = [

@@ -3,16 +3,15 @@ import { useParams } from "react-router-dom";
 import { verbFormsData } from "../data/verbForms";
 import BreadcrumbBar from "./BreadcrumbBar";
 import FormLearn from "./FormLearn";
-
-type Props = {};
-
-type State = {};
+import OverviewCard from "./OverviewCard";
 
 const FormDetail = () => {
   const { formId } = useParams<{ formId: string }>();
   const formData = verbFormsData.find((form) => form.id === formId);
 
-  const [learningMode, setLearningMode] = useState(false);
+  const [mode, setMode] = useState<"default" | "learn" | "quiz" | "test">(
+    "default"
+  );
 
   if (!formData) return <div>Form not found.</div>;
 
@@ -25,44 +24,11 @@ const FormDetail = () => {
           { label: formData.name, path: null },
         ]}
       />
-      {!learningMode && (
-        <div style={{ textAlign: "center", marginTop: "2rem" }}>
-          <h2 style={{ marginBottom: "0" }}>{formData.name}</h2>
-          <p style={{ fontStyle: "italic" }}>{formData.meaning}</p>
-
-          <div style={{ marginTop: "2rem" }}>
-            {formData.learnSet.map((form, idx) => (
-              <div
-                key={idx}
-                style={{
-                  border: "1px solid #ccc",
-                  borderRadius: "8px",
-                  padding: "1rem",
-                  margin: "0.5rem auto",
-                  maxWidth: "300px",
-                }}
-              >
-                <h4 style={{ marginBottom: "0.5rem" }}>{form.tense}</h4>
-                <p style={{ fontSize: "1.5rem" }}>{form.verb}</p>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ marginTop: "2rem" }}>
-            <button
-              style={{ margin: "0.5rem", padding: "1rem" }}
-              onClick={() => {
-                setLearningMode(true);
-              }}
-            >
-              Learn
-            </button>
-            <button style={{ margin: "0.5rem", padding: "1rem" }}>Quiz</button>
-            <button style={{ margin: "0.5rem", padding: "1rem" }}>Test</button>
-          </div>
-        </div>
+      {mode === "default" && (
+        <OverviewCard formData={formData} setMode={setMode} />
       )}
-      {learningMode && <FormLearn formData={formData} />}
+      {mode === "learn" && <FormLearn formData={formData} setMode={setMode} />}
+      {/* {mode === "quiz" && <FormLearn formData={formData} setMode={setMode} />} */}
     </div>
   );
 };

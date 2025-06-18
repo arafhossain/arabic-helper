@@ -1,25 +1,25 @@
 import React, { useState } from "react";
-import { VerbForm } from "../data/verbForms";
+import { LearnCard, VerbForm } from "../data/verbForms";
 
 type IFormLearn = {
   formData: VerbForm;
+  setMode: (mode: "default" | "learn" | "quiz" | "test") => void;
 };
 
-export default function FormLearn({ formData }: IFormLearn) {
-  const [learningMode, setLearningMode] = useState(false);
+export default function FormLearn({ formData, setMode }: IFormLearn) {
   const [learningIndex, setLearningIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
 
   if (!formData) return <div>Form not found.</div>;
 
-  const currentCard = formData.learnSet[learningIndex];
+  const currentCard: LearnCard = formData.learnSet[learningIndex];
 
   const handleNext = () => {
     if (learningIndex < formData.learnSet.length - 1) {
       setLearningIndex((prev) => prev + 1);
       setShowAnswer(false);
     } else {
-      setLearningMode(false);
+      setMode("default");
       setLearningIndex(0);
       setShowAnswer(false);
     }
