@@ -5,19 +5,21 @@ export interface VerbForm {
   meaning: string;
   root: string;
   learnSet: LearnCard[];
-  quizSet: {
-    baseVerb: string;
-    tenses: {
-      past: string;
-      present: string;
-      command: string;
-    };
-  }[];
+  quizSet: QuizCard[];
 }
 
 export interface LearnCard {
   tense: "past" | "present" | "command";
   verb: string;
+}
+
+export interface QuizCard {
+  baseVerb: string;
+  tenses: {
+    past: string;
+    present: string;
+    command: string;
+  };
 }
 
 export const verbFormsData: VerbForm[] = [
