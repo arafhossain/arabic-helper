@@ -10,6 +10,15 @@ body {
   font-family: sans-serif;
 }
 
+.arabic-text {
+  font-family: "Scheherazade New", serif;
+  direction: rtl;
+  font-size: 1.5rem;
+  line-height: 2.2rem;
+  text-align: center;
+  display: inline-block;
+}
+
 button {
   background-color: var(--primary-color);
   color: var(--font-color);

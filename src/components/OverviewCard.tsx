@@ -27,8 +27,10 @@ export default function OverviewCard({
               maxWidth: "300px",
             }}
           >
-            <h4 style={{ marginBottom: "0.5rem" }}>{form.tense}</h4>
-            <p style={{ fontSize: "1.5rem" }}>{form.verb}</p>
+            <h4 style={{ marginBottom: "0.3rem" }}>{form.tense}</h4>
+            <p style={{ fontSize: "1.5rem" }} className="arabic-text">
+              {form.verb}
+            </p>
           </div>
         ))}
       </div>

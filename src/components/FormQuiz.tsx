@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { VerbForm } from "../models/VerbForm";
 import { ExerciseMode } from "./FormDetail";
 import { QuizCard } from "../models/VerbForm";
+import "./FormQuiz.css";
 
 type FormQuizProps = {
   formData: VerbForm;
@@ -12,8 +13,12 @@ function generateTashkeelVariants(correct: string, numVariants = 3): string[] {
   const variants = new Set<string>();
   const harakat = ["َ", "ِ", "ُ", "ْ"]; // fatha, kasra, damma, sukoon
 
-  while (variants.size < numVariants) {
+  let attempts = 0;
+  const MAX_ATTEMPTS = 10 * numVariants;
+
+  while (variants.size < numVariants && attempts < MAX_ATTEMPTS) {
     let chars = [...correct.split("")];
+    console.log(chars);
 
     // Collect indexes of harakat
     const harakahIndexes = chars
@@ -39,6 +44,9 @@ function generateTashkeelVariants(correct: string, numVariants = 3): string[] {
     // Check to ensure its not the same as correct answer, add to set
     if (variant !== correct) {
       variants.add(variant);
+      attempts = 0;
+    } else {
+      attempts++;
     }
   }
 
@@ -94,7 +102,7 @@ export default function FormQuiz({ formData }: FormQuizProps) {
   }
 
   return (
-    <div>
+    <div className="quiz-container">
       {showResult ? (
         <div>
           <h2>Quiz Complete!</h2>
@@ -104,16 +112,23 @@ export default function FormQuiz({ formData }: FormQuizProps) {
         </div>
       ) : (
         <div>
-          <h2>{`What is the ${currentTense.toUpperCase()} form of "${
-            currentQuestion.baseVerb
-          }"?`}</h2>
+          <h2>
+            {`What is the ${currentTense.toUpperCase()} form of "`}
+            <span
+              className="arabic-text"
+              style={{ fontSize: "2rem", fontWeight: "normal" }}
+            >
+              {currentQuestion.baseVerb}
+            </span>
+            "?
+          </h2>
 
           <div className="options">
             {uniqueAnswers.map((choice, idx) => (
               <button
                 key={idx}
                 onClick={() => handleAnswerClick(choice)}
-                className={
+                className={`${
                   selectedAnswer
                     ? choice === correctAnswer
                       ? "correct"
@@ -121,7 +136,7 @@ export default function FormQuiz({ formData }: FormQuizProps) {
                       ? "wrong"
                       : ""
                     : ""
-                }
+                } arabic-text`}
                 disabled={!!selectedAnswer}
               >
                 {choice}

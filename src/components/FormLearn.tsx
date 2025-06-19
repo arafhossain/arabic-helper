@@ -54,6 +54,7 @@ export default function FormLearn({ formData, setMode }: IFormLearn) {
           textAlign: "center",
           marginBottom: "1rem",
         }}
+        className={showAnswer ? "arabic-text" : ""}
         onClick={() => setShowAnswer(!showAnswer)}
       >
         {showAnswer ? currentCard.verb : currentCard.tense}
