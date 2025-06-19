@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { VerbForm } from "../models/VerbForm";
 import { ExerciseMode } from "./FormDetail";
 import { QuizCard } from "../models/VerbForm";
@@ -8,6 +8,18 @@ type FormQuizProps = {
   formData: VerbForm;
   setMode: (mode: ExerciseMode) => void;
 };
+
+function generateQuizChoices(correct: string): string[] {
+  const distractors = generateTashkeelVariants(correct);
+  const choices = [...distractors, correct];
+
+  for (let i = choices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [choices[i], choices[j]] = [choices[j], choices[i]];
+  }
+
+  return choices;
+}
 
 function generateTashkeelVariants(correct: string, numVariants = 3): string[] {
   const variants = new Set<string>();
@@ -53,102 +65,209 @@ function generateTashkeelVariants(correct: string, numVariants = 3): string[] {
   return Array.from(variants);
 }
 
-export default function FormQuiz({ formData }: FormQuizProps) {
+type QuizQuestion = {
+  baseVerb: string;
+  tense: string;
+  correctAnswer: string;
+  choices: string[];
+};
+
+type AnswerData = {
+  baseVerb: string;
+  tense: string;
+  correct: string;
+  userAnswer: string;
+  isCorrect: boolean;
+};
+
+export default function FormQuiz({ formData, setMode }: FormQuizProps) {
+  const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>([]);
+  const [userAnswers, setUserAnswers] = useState<AnswerData[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const [showNextButton, setShowNextButton] = useState(false);
 
-  const currentQuestion: QuizCard = formData.quizSet[currentIndex];
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const tenses = ["past", "present", "command"] as const;
-  const currentTense = tenses[Math.floor(Math.random() * tenses.length)];
+  useEffect(() => {
+    const tenses = ["past", "present", "command"] as const;
 
-  const correctAnswer = currentQuestion.tenses[currentTense];
+    const generated: QuizQuestion[] = formData.quizSet.flatMap((verbData) =>
+      tenses.map((tense) => {
+        const correct = verbData.tenses[tense];
+        const choices = generateQuizChoices(correct);
 
-  function generateQuizChoices(correct: string): string[] {
-    const distractors = generateTashkeelVariants(correct);
-    const choices = [...distractors, correct];
+        const QUIZ_QUESTION: QuizQuestion = {
+          baseVerb: verbData.baseVerb,
+          tense,
+          correctAnswer: correct,
+          choices,
+        };
 
-    for (let i = choices.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [choices[i], choices[j]] = [choices[j], choices[i]];
-    }
+        return QUIZ_QUESTION;
+      })
+    );
 
-    return choices;
-  }
-  const uniqueAnswers = generateQuizChoices(correctAnswer);
+    setQuizQuestions(generated);
+  }, []);
 
-  function handleAnswerClick(choice: string) {
+  function handleAnswerClick(choice: string, correct: string) {
     setSelectedAnswer(choice);
 
-    if (choice === correctAnswer) {
+    const IS_CORRECT = choice === correct;
+
+    if (IS_CORRECT) {
       setScore((prev) => prev + 1);
       setFeedback("correct");
     } else {
       setFeedback("wrong");
     }
 
-    setTimeout(() => {
-      if (currentIndex + 1 < formData.quizSet.length) {
-        setCurrentIndex((prev) => prev + 1);
-        setSelectedAnswer(null);
-        setFeedback(null);
-      } else {
-        setShowResult(true);
-      }
-    }, 1200);
+    const ANSWER_DATA: AnswerData = {
+      baseVerb: quizQuestions[currentIndex].baseVerb,
+      tense: quizQuestions[currentIndex].tense,
+      correct: correct,
+      userAnswer: choice,
+      isCorrect: IS_CORRECT,
+    };
+
+    setUserAnswers((prev) => [...prev, ANSWER_DATA]);
+
+    setShowNextButton(true);
+
+    timeoutRef.current = setTimeout(() => {
+      handleNextQuestion();
+    }, 3000);
   }
 
-  return (
-    <div className="quiz-container">
-      {showResult ? (
-        <div>
-          <h2>Quiz Complete!</h2>
-          <p>
-            You got {score} out of {formData.quizSet.length} correct.
-          </p>
-        </div>
-      ) : (
-        <div>
-          <h2>
-            {`What is the ${currentTense.toUpperCase()} form of "`}
-            <span
-              className="arabic-text"
-              style={{ fontSize: "2rem", fontWeight: "normal" }}
-            >
-              {currentQuestion.baseVerb}
-            </span>
-            "?
-          </h2>
+  function handleNextQuestion() {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
 
-          <div className="options">
-            {uniqueAnswers.map((choice, idx) => (
-              <button
-                key={idx}
-                onClick={() => handleAnswerClick(choice)}
-                className={`${
-                  selectedAnswer
-                    ? choice === correctAnswer
-                      ? "correct"
-                      : choice === selectedAnswer
-                      ? "wrong"
-                      : ""
-                    : ""
-                } arabic-text`}
-                disabled={!!selectedAnswer}
-              >
-                {choice}
-              </button>
-            ))}
+    if (currentIndex + 1 < quizQuestions.length) {
+      setCurrentIndex((prev) => prev + 1);
+      setSelectedAnswer(null);
+      setFeedback(null);
+      setShowNextButton(false);
+    } else {
+      setShowResult(true);
+    }
+  }
+
+  if (quizQuestions.length === 0) {
+    return <p>Loading quiz ...</p>;
+  } else {
+    const currentQuestionData: QuizQuestion = quizQuestions[currentIndex];
+
+    return (
+      <div className="quiz-container">
+        <button
+          className="quit-button top-right"
+          onClick={() => setMode("default")}
+        >
+          Quit
+        </button>
+        {showResult ? (
+          <div>
+            <h2>Quiz Complete!</h2>
+            <p>
+              You got {score} out of {quizQuestions.length} correct.
+            </p>
+            <table className="result-table">
+              <thead>
+                <tr>
+                  <th>Verb</th>
+                  <th>Tense</th>
+                  <th>Your Answer</th>
+                  <th>Correct Answer</th>
+                  <th>✅</th>
+                </tr>
+              </thead>
+              <tbody>
+                {userAnswers.map((answerData, idx) => (
+                  <tr key={idx}>
+                    <td>
+                      {" "}
+                      <span className="arabic-text">{answerData.baseVerb}</span>
+                    </td>
+                    <td>{answerData.tense}</td>
+                    <td>
+                      <span
+                        className={`arabic-text ${
+                          !answerData.isCorrect ? "wrong" : ""
+                        }`}
+                      >
+                        {answerData.userAnswer}
+                      </span>
+                    </td>
+                    <td>
+                      <span className="arabic-text">{answerData.correct}</span>
+                    </td>
+                    <td>{answerData.isCorrect ? "✅" : "❌"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
+        ) : (
+          <div>
+            <h2>
+              {`What is the ${currentQuestionData.tense.toUpperCase()} form of "`}
+              <span
+                className="arabic-text"
+                style={{ fontSize: "2rem", fontWeight: "normal" }}
+              >
+                {currentQuestionData.baseVerb}
+              </span>
+              "?
+            </h2>
 
-          {feedback && (
-            <p>{feedback === "correct" ? "✅ Correct!" : "❌ Wrong!"}</p>
-          )}
-        </div>
-      )}
-    </div>
-  );
+            <div className="options">
+              {currentQuestionData.choices.map((choice, idx) => (
+                <button
+                  key={idx}
+                  onClick={() =>
+                    handleAnswerClick(choice, currentQuestionData.correctAnswer)
+                  }
+                  className={`${
+                    selectedAnswer
+                      ? choice === currentQuestionData.correctAnswer
+                        ? "correct"
+                        : choice === selectedAnswer
+                        ? "wrong"
+                        : ""
+                      : ""
+                  } arabic-text`}
+                  disabled={!!selectedAnswer}
+                >
+                  {choice}
+                </button>
+              ))}
+            </div>
+            <div className="quiz-feedback-container">
+              {feedback && (
+                <p style={{ marginTop: "2rem" }}>
+                  {feedback === "correct" ? "✅ Correct!" : "❌ Wrong!"}
+                </p>
+              )}
+              {showNextButton && !showResult && (
+                <button
+                  onClick={() => {
+                    handleNextQuestion();
+                  }}
+                >
+                  Next
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
 }
