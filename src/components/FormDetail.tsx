@@ -4,14 +4,15 @@ import { verbFormsData } from "../data/verbForms";
 import BreadcrumbBar from "./BreadcrumbBar";
 import FormLearn from "./FormLearn";
 import OverviewCard from "./OverviewCard";
+import FormQuiz from "./FormQuiz";
+
+export type ExerciseMode = "default" | "learn" | "quiz" | "test";
 
 const FormDetail = () => {
   const { formId } = useParams<{ formId: string }>();
   const formData = verbFormsData.find((form) => form.id === formId);
 
-  const [mode, setMode] = useState<"default" | "learn" | "quiz" | "test">(
-    "default"
-  );
+  const [mode, setMode] = useState<ExerciseMode>("default");
 
   if (!formData) return <div>Form not found.</div>;
 
@@ -28,7 +29,7 @@ const FormDetail = () => {
         <OverviewCard formData={formData} setMode={setMode} />
       )}
       {mode === "learn" && <FormLearn formData={formData} setMode={setMode} />}
-      {/* {mode === "quiz" && <FormLearn formData={formData} setMode={setMode} />} */}
+      {mode === "quiz" && <FormQuiz formData={formData} setMode={setMode} />}
     </div>
   );
 };

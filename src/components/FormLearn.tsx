@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { LearnCard, VerbForm } from "../data/verbForms";
+import { LearnCard, VerbForm } from "../models/VerbForm";
+import { ExerciseMode } from "./FormDetail";
 
 type IFormLearn = {
   formData: VerbForm;
-  setMode: (mode: "default" | "learn" | "quiz" | "test") => void;
+  setMode: (mode: ExerciseMode) => void;
 };
 
 export default function FormLearn({ formData, setMode }: IFormLearn) {

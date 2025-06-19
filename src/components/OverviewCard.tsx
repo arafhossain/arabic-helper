@@ -1,5 +1,5 @@
 import React from "react";
-import { VerbForm } from "../data/verbForms";
+import { VerbForm } from "../models/VerbForm";
 
 type IOverviewCardProps = {
   formData: VerbForm;
