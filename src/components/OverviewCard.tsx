@@ -1,5 +1,5 @@
 import React from "react";
-import { VerbForm } from "../models/VerbForm";
+import { ModeType, VerbForm } from "../models/VerbForm";
 
 type IOverviewCardProps = {
   formData: VerbForm;
@@ -36,23 +36,26 @@ export default function OverviewCard({
       </div>
 
       <div style={{ marginTop: "2rem" }}>
-        <button
-          style={{ margin: "0.5rem", padding: "1rem" }}
-          onClick={() => {
-            setMode("learn");
-          }}
-        >
-          Learn
-        </button>
-        <button
-          style={{ margin: "0.5rem", padding: "1rem" }}
-          onClick={() => {
-            setMode("quiz");
-          }}
-        >
-          Quiz
-        </button>
-        <button style={{ margin: "0.5rem", padding: "1rem" }}>Test</button>
+        {formData.disclaimer && (
+          <p className="form-disclaimer">{formData.disclaimer}</p>
+        )}
+        {(["learn", "quiz", "test"] as ModeType[]).map((mode) => {
+          const hiddenMode = formData.hideModes?.find((m) => m.type === mode);
+          const isDisabled = !!hiddenMode;
+
+          return (
+            <button
+              key={mode}
+              style={{ margin: "0.5rem", padding: "1rem" }}
+              className={`mode-button ${isDisabled ? "disabled" : ""}`}
+              disabled={isDisabled}
+              onClick={() => !isDisabled && setMode(mode)}
+              data-tooltip={isDisabled ? hiddenMode?.tooltip : undefined}
+            >
+              {mode.charAt(0).toUpperCase() + mode.slice(1)}
+            </button>
+          );
+        })}
       </div>
     </div>
   );

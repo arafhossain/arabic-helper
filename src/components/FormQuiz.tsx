@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { VerbForm } from "../models/VerbForm";
 import { ExerciseMode } from "./FormDetail";
-import { QuizCard } from "../models/VerbForm";
 import "./FormQuiz.css";
 
 type FormQuizProps = {
@@ -111,8 +110,13 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
       })
     );
 
+    for (let i = generated.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [generated[i], generated[j]] = [generated[j], generated[i]];
+    }
+
     setQuizQuestions(generated);
-  }, []);
+  }, [formData]);
 
   function handleAnswerClick(choice: string, correct: string) {
     setSelectedAnswer(choice);
@@ -181,6 +185,7 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
             <table className="result-table">
               <thead>
                 <tr>
+                  <th></th>
                   <th>Verb</th>
                   <th>Tense</th>
                   <th>Your Answer</th>
@@ -191,6 +196,7 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
               <tbody>
                 {userAnswers.map((answerData, idx) => (
                   <tr key={idx}>
+                    <td>{idx + 1}.</td>
                     <td>
                       {" "}
                       <span className="arabic-text">{answerData.baseVerb}</span>
