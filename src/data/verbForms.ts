@@ -30,32 +30,7 @@ export const verbFormsData: VerbForm[] = [
       { tense: "present", verb: "يَفْعَلُ" },
       { tense: "command", verb: "اِفْعَلْ" },
     ],
-    quizSet: [
-      {
-        baseVerb: "فعل",
-        tenses: {
-          past: "فَعَلَ",
-          present: "يَفْعَلُ",
-          command: "اِفْعَلْ",
-        },
-      },
-      {
-        baseVerb: "كتب",
-        tenses: {
-          past: "كَتَبَ",
-          present: "يَكْتُبُ",
-          command: "اكْتُبْ",
-        },
-      },
-      {
-        baseVerb: "درس",
-        tenses: {
-          past: "دَرَسَ",
-          present: "يَدْرُسُ",
-          command: "ادْرُسْ",
-        },
-      },
-    ],
+    quizSet: [],
   },
   {
     id: "form-ii",
@@ -68,13 +43,13 @@ export const verbFormsData: VerbForm[] = [
       { tense: "past", verb: "فَعَّلَ" },
       { tense: "present", verb: "يُفَعِّلُ" },
       { tense: "command", verb: "فَعِّلْ" },
-      { tense: "verbal noun", verb: "تَفْعِيلٌ" },
-      { tense: "doer pattern", verb: "مُفَعِّلٌ" },
-      { tense: "receiver pattern", verb: "مُفَعَّلٌ" },
+      { tense: "verbalNoun", verb: "تَفْعِيلٌ" },
+      { tense: "doerPattern", verb: "مُفَعِّلٌ" },
+      { tense: "receiverPattern", verb: "مُفَعَّلٌ" },
     ],
     quizSet: [
       {
-        baseVerb: "فَعَّلَ",
+        baseVerb: "فعل",
         tenses: {
           past: "فَعَّلَ",
           present: "يُفَعِّلُ",
@@ -85,18 +60,7 @@ export const verbFormsData: VerbForm[] = [
         },
       },
       {
-        baseVerb: "فَعَّلَ",
-        tenses: {
-          past: "فَعَّلَ",
-          present: "يُفَعِّلُ",
-          command: "فَعِّلْ",
-          verbalNoun: "تَفْعِيلٌ",
-          doerPattern: "مُفَعِّلٌ",
-          receiverPattern: "مُفَعَّلٌ",
-        },
-      },
-      {
-        baseVerb: "طَهَّرَ",
+        baseVerb: "طهر",
         tenses: {
           past: "طَهَّرَ",
           present: "يُطَهِّرُ",
@@ -107,7 +71,7 @@ export const verbFormsData: VerbForm[] = [
         },
       },
       {
-        baseVerb: "عَلَّمَ",
+        baseVerb: "علم",
         tenses: {
           past: "عَلَّمَ",
           present: "يُعَلِّمُ",
@@ -115,6 +79,17 @@ export const verbFormsData: VerbForm[] = [
           verbalNoun: "تَعْلِيمٌ",
           doerPattern: "مُعَلِّمٌ",
           receiverPattern: "مُعَلَّمٌ",
+        },
+      },
+      {
+        baseVerb: "سير",
+        tenses: {
+          past: "سَيَّرَ",
+          present: "يُسَيِّرُ",
+          command: "سَيِّرْ",
+          verbalNoun: "تَسْيِيرٌ",
+          doerPattern: "مُسَيِّرٌ",
+          receiverPattern: "مُسَيَّرٌ",
         },
       },
     ],

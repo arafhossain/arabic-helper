@@ -1,5 +1,26 @@
 export type ModeType = "quiz" | "learn" | "test";
 
+export type VerbTenseKey =
+  | "past"
+  | "present"
+  | "command"
+  | "verbalNoun"
+  | "doerPattern"
+  | "receiverPattern";
+
+export type VerbTenseMap = {
+  [K in VerbTenseKey]: string;
+};
+
+export const VerbTenseLabels: Record<VerbTenseKey, string> = {
+  past: "Past",
+  present: "Present",
+  command: "Command",
+  verbalNoun: "Verbal Noun",
+  doerPattern: "Doer Pattern",
+  receiverPattern: "Receiver Pattern",
+};
+
 type HiddenMode = {
   type: ModeType;
   tooltip: string;
@@ -18,13 +39,7 @@ export interface VerbForm {
 }
 
 export interface LearnCard {
-  tense:
-    | "past"
-    | "present"
-    | "command"
-    | "verbal noun"
-    | "doer pattern"
-    | "receiver pattern";
+  tense: VerbTenseKey;
   verb: string;
 }
 
@@ -34,8 +49,8 @@ export interface QuizCard {
     past: string;
     present: string;
     command: string;
-    verbalNoun?: string;
-    doerPattern?: string;
-    receiverPattern?: string;
+    verbalNoun: string;
+    doerPattern: string;
+    receiverPattern: string;
   };
 }

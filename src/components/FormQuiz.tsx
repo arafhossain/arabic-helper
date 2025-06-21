@@ -1,5 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { VerbForm } from "../models/VerbForm";
+import {
+  VerbForm,
+  VerbTenseLabels,
+  VerbTenseKey,
+  QuizCard,
+} from "../models/VerbForm";
 import { ExerciseMode } from "./FormDetail";
 import "./FormQuiz.css";
 
@@ -23,13 +28,14 @@ function generateQuizChoices(correct: string): string[] {
 function generateTashkeelVariants(correct: string, numVariants = 3): string[] {
   const variants = new Set<string>();
   const harakat = ["َ", "ِ", "ُ", "ْ"]; // fatha, kasra, damma, sukoon
+  const vowelsOnly = ["َ", "ِ", "ُ"]; // exclude sukoon
+  const SHADDA = "ّ";
 
   let attempts = 0;
   const MAX_ATTEMPTS = 10 * numVariants;
 
   while (variants.size < numVariants && attempts < MAX_ATTEMPTS) {
     let chars = [...correct.split("")];
-    console.log(chars);
 
     // Collect indexes of harakat
     const harakahIndexes = chars
@@ -43,13 +49,24 @@ function generateTashkeelVariants(correct: string, numVariants = 3): string[] {
       harakahIndexes[Math.floor(Math.random() * harakahIndexes.length)];
     const current = chars[randIndex];
 
-    // Get a different harakah
-    const newHarakah = harakat.filter((h) => h !== current)[
-      Math.floor(Math.random() * 3)
-    ];
+    // Determine if the harakah follows a shadda
+    const followsShadda = chars[randIndex - 1] === SHADDA;
 
-    // Replace randomly chosen harakat with different harakat
+    // Filter harakat accordingly
+    const options = followsShadda
+      ? vowelsOnly.filter((h) => h !== current)
+      : harakat.filter((h) => h !== current);
+
+    // If no valid replacement exists, skip
+    if (options.length === 0) {
+      attempts++;
+      continue;
+    }
+
+    // Replace the harakah
+    const newHarakah = options[Math.floor(Math.random() * options.length)];
     chars[randIndex] = newHarakah;
+
     const variant = chars.join("");
 
     // Check to ensure its not the same as correct answer, add to set
@@ -66,14 +83,14 @@ function generateTashkeelVariants(correct: string, numVariants = 3): string[] {
 
 type QuizQuestion = {
   baseVerb: string;
-  tense: string;
+  tense: VerbTenseKey;
   correctAnswer: string;
   choices: string[];
 };
 
 type AnswerData = {
   baseVerb: string;
-  tense: string;
+  tense: VerbTenseKey;
   correct: string;
   userAnswer: string;
   isCorrect: boolean;
@@ -92,9 +109,16 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    const tenses = ["past", "present", "command"] as const;
+    const tenses = Object.keys(VerbTenseLabels) as VerbTenseKey[];
 
-    const generated: QuizQuestion[] = formData.quizSet.flatMap((verbData) =>
+    function getRandomSubset(arr: QuizCard[], count: number): QuizCard[] {
+      const shuffled = [...arr].sort(() => Math.random() - 0.5);
+      return shuffled.slice(0, count);
+    }
+
+    const selectedQuizSet = getRandomSubset(formData.quizSet, 3);
+
+    const generated: QuizQuestion[] = selectedQuizSet.flatMap((verbData) =>
       tenses.map((tense) => {
         const correct = verbData.tenses[tense];
         const choices = generateQuizChoices(correct);
@@ -167,6 +191,7 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
     return <p>Loading quiz ...</p>;
   } else {
     const currentQuestionData: QuizQuestion = quizQuestions[currentIndex];
+    const tenseLabel = VerbTenseLabels[currentQuestionData.tense];
 
     return (
       <div className="quiz-container">
@@ -201,7 +226,7 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
                       {" "}
                       <span className="arabic-text">{answerData.baseVerb}</span>
                     </td>
-                    <td>{answerData.tense}</td>
+                    <td>{VerbTenseLabels[answerData.tense]}</td>
                     <td>
                       <span
                         className={`arabic-text ${
@@ -222,15 +247,16 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
           </div>
         ) : (
           <div>
+            <h1>{formData.name}</h1>
             <h2>
-              {`What is the ${currentQuestionData.tense.toUpperCase()} form of "`}
+              {`What is the ${tenseLabel.toUpperCase()} form of `}
               <span
                 className="arabic-text"
                 style={{ fontSize: "2rem", fontWeight: "normal" }}
               >
                 {currentQuestionData.baseVerb}
               </span>
-              "?
+              ?
             </h2>
 
             <div className="options">
