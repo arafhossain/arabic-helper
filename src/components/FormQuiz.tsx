@@ -247,7 +247,10 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
           </div>
         ) : (
           <div>
-            <h1>{formData.name}</h1>
+            <h1 style={{ marginBottom: "6px" }}>{formData.name}</h1>
+            <span style={{ color: "gray", fontSize: "1.2rem" }}>
+              Question {currentIndex + 1} of {quizQuestions.length}
+            </span>
             <h2>
               {`What is the ${tenseLabel.toUpperCase()} form of `}
               <span

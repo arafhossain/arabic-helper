@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { LearnCard, VerbForm } from "../models/VerbForm";
+import { LearnCard, VerbForm, VerbTenseLabels } from "../models/VerbForm";
 import { ExerciseMode } from "./FormDetail";
 
 type IFormLearn = {
@@ -47,8 +47,8 @@ export default function FormLearn({ formData, setMode }: IFormLearn) {
           borderRadius: "8px",
           padding: "2rem",
           width: "300px",
-          height: "30px",
-          fontSize: "1.5rem",
+          height: "40px",
+          fontSize: "2rem",
           cursor: "pointer",
           backgroundColor: "#f9f9f9",
           textAlign: "center",
@@ -57,7 +57,7 @@ export default function FormLearn({ formData, setMode }: IFormLearn) {
         className={showAnswer ? "arabic-text" : ""}
         onClick={() => setShowAnswer(!showAnswer)}
       >
-        {showAnswer ? currentCard.verb : currentCard.tense}
+        {showAnswer ? currentCard.verb : VerbTenseLabels[currentCard.tense]}
       </div>
 
       <button
