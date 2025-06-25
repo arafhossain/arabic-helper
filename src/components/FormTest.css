@@ -1,0 +1,112 @@
+.form-test-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 24px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #fafafa;
+}
+
+.form-test-question {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.form-test-input-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.form-test-input {
+  font-size: 1.75rem;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  text-align: right;
+  width: 100%;
+  max-width: 400px;
+  line-height: 3.5rem;
+}
+
+.form-test-keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+  align-items: center;
+}
+
+.keyboard-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.keyboard-button {
+  font-size: 1.25rem;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: var(--primary-color);
+}
+
+.keyboard-button:hover {
+  background-color: #f0f0f0;
+}
+
+.harakah-button {
+  background-color: #f9f9f9;
+}
+
+.control-button {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.form-test-controls {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.submit-button,
+.next-button {
+  font-size: 1rem;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--primary-color);
+  color: white;
+  cursor: pointer;
+}
+
+.submit-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.form-test-result {
+  text-align: center;
+  margin-top: 24px;
+}
+
+.correct {
+  color: green;
+  font-weight: bold;
+}
+
+.incorrect {
+  color: #d32f2f;
+  font-weight: bold;
+}
+
+/* .arabic-text {
+  font-family: "Amiri", serif;
+  direction: rtl;
+  font-size: 1.75rem;
+} */

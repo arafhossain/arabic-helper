@@ -3,10 +3,14 @@ import {
   VerbForm,
   VerbTenseLabels,
   VerbTenseKey,
-  QuizCard,
+  QuestionCard,
 } from "../models/VerbForm";
 import { ExerciseMode } from "./FormDetail";
 import "./FormQuiz.css";
+import {
+  HARAKAT_VOWELS_WITH_SUKOON,
+  HARAKAT_VOWELS,
+} from "../data/arabicCharacters";
 
 type FormQuizProps = {
   formData: VerbForm;
@@ -27,8 +31,6 @@ function generateQuizChoices(correct: string): string[] {
 
 function generateTashkeelVariants(correct: string, numVariants = 3): string[] {
   const variants = new Set<string>();
-  const harakat = ["َ", "ِ", "ُ", "ْ"]; // fatha, kasra, damma, sukoon
-  const vowelsOnly = ["َ", "ِ", "ُ"]; // exclude sukoon
   const SHADDA = "ّ";
 
   let attempts = 0;
@@ -39,7 +41,9 @@ function generateTashkeelVariants(correct: string, numVariants = 3): string[] {
 
     // Collect indexes of harakat
     const harakahIndexes = chars
-      .map((char, idx) => (harakat.includes(char) ? idx : null))
+      .map((char, idx) =>
+        HARAKAT_VOWELS_WITH_SUKOON.includes(char) ? idx : null
+      )
       .filter((x): x is number => x !== null);
 
     if (harakahIndexes.length === 0) break;
@@ -54,8 +58,8 @@ function generateTashkeelVariants(correct: string, numVariants = 3): string[] {
 
     // Filter harakat accordingly
     const options = followsShadda
-      ? vowelsOnly.filter((h) => h !== current)
-      : harakat.filter((h) => h !== current);
+      ? HARAKAT_VOWELS.filter((h) => h !== current)
+      : HARAKAT_VOWELS_WITH_SUKOON.filter((h) => h !== current);
 
     // If no valid replacement exists, skip
     if (options.length === 0) {
@@ -111,7 +115,10 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
   useEffect(() => {
     const tenses = Object.keys(VerbTenseLabels) as VerbTenseKey[];
 
-    function getRandomSubset(arr: QuizCard[], count: number): QuizCard[] {
+    function getRandomSubset(
+      arr: QuestionCard[],
+      count: number
+    ): QuestionCard[] {
       const shuffled = [...arr].sort(() => Math.random() - 0.5);
       return shuffled.slice(0, count);
     }

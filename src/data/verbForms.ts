@@ -31,6 +31,7 @@ export const verbFormsData: VerbForm[] = [
       { tense: "command", verb: "اِفْعَلْ" },
     ],
     quizSet: [],
+    testSet: [],
   },
   {
     id: "form-ii",
@@ -48,6 +49,52 @@ export const verbFormsData: VerbForm[] = [
       { tense: "receiverPattern", verb: "مُفَعَّلٌ" },
     ],
     quizSet: [
+      {
+        baseVerb: "فعل",
+        tenses: {
+          past: "فَعَّلَ",
+          present: "يُفَعِّلُ",
+          command: "فَعِّلْ",
+          verbalNoun: "تَفْعِيلٌ",
+          doerPattern: "مُفَعِّلٌ",
+          receiverPattern: "مُفَعَّلٌ",
+        },
+      },
+      {
+        baseVerb: "طهر",
+        tenses: {
+          past: "طَهَّرَ",
+          present: "يُطَهِّرُ",
+          command: "طَهِّرْ",
+          verbalNoun: "تَطْهِيرٌ",
+          doerPattern: "مُطَهِّرٌ",
+          receiverPattern: "مُطَهَّرٌ",
+        },
+      },
+      {
+        baseVerb: "علم",
+        tenses: {
+          past: "عَلَّمَ",
+          present: "يُعَلِّمُ",
+          command: "عَلِّمْ",
+          verbalNoun: "تَعْلِيمٌ",
+          doerPattern: "مُعَلِّمٌ",
+          receiverPattern: "مُعَلَّمٌ",
+        },
+      },
+      {
+        baseVerb: "سير",
+        tenses: {
+          past: "سَيَّرَ",
+          present: "يُسَيِّرُ",
+          command: "سَيِّرْ",
+          verbalNoun: "تَسْيِيرٌ",
+          doerPattern: "مُسَيِّرٌ",
+          receiverPattern: "مُسَيَّرٌ",
+        },
+      },
+    ],
+    testSet: [
       {
         baseVerb: "فعل",
         tenses: {

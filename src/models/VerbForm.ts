@@ -33,7 +33,8 @@ export interface VerbForm {
   meaning: string;
   root: string;
   learnSet: LearnCard[];
-  quizSet: QuizCard[];
+  quizSet: QuestionCard[];
+  testSet: QuestionCard[];
   hideModes?: HiddenMode[];
   disclaimer?: string;
 }
@@ -43,7 +44,7 @@ export interface LearnCard {
   verb: string;
 }
 
-export interface QuizCard {
+export interface QuestionCard {
   baseVerb: string;
   tenses: {
     past: string;
