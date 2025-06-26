@@ -105,8 +105,37 @@
   font-weight: bold;
 }
 
-/* .arabic-text {
-  font-family: "Amiri", serif;
-  direction: rtl;
-  font-size: 1.75rem;
-} */
+.form-test-feedback {
+  margin-top: 2rem;
+  text-align: center;
+  padding: 1.25rem 1rem;
+  border-radius: 8px;
+  font-size: 1.125rem;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1rem;
+}
+
+.form-test-feedback.correct {
+  background-color: #e6f5ea;
+  color: #1e4620;
+  border: 1px solid #a5d6b5;
+}
+
+.form-test-feedback.wrong {
+  background-color: #fbeaea;
+  color: #6f1d1b;
+  border: 1px solid #f5b5b5;
+}
+
+.feedback-message {
+  font-size: 1.25rem;
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.correct-answer {
+  font-size: 1.125rem;
+}

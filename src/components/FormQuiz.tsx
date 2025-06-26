@@ -292,11 +292,6 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
               ))}
             </div>
             <div className="quiz-feedback-container">
-              {feedback && (
-                <p style={{ marginTop: "2rem" }}>
-                  {feedback === "correct" ? "✅ Correct!" : "❌ Wrong!"}
-                </p>
-              )}
               {showNextButton && !showResult && (
                 <button
                   onClick={() => {

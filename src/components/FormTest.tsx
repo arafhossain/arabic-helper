@@ -43,10 +43,12 @@ export default function FormTest({ formData }: FormTestProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [userInput, setUserInput] = useState("");
-  const [showAnswer, setShowAnswer] = useState(false);
+  const [showAnswer, setShowAnswer] = useState(true);
   const [showResult, setShowResult] = useState(false);
 
-  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(
+    "correct"
+  );
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -236,15 +238,17 @@ export default function FormTest({ formData }: FormTestProps) {
         {showAnswer && (
           <div className="form-test-result">
             {feedback && (
-              <p style={{ marginTop: "2rem" }}>
-                {feedback === "correct" ? "✅ Correct!" : "❌ Wrong!"}
-              </p>
-            )}
-            {feedback === "wrong" && (
-              <p>
-                Correct answer:{" "}
-                <span className="arabic-text">{correctAnswer}</span>
-              </p>
+              <div className={`form-test-feedback ${feedback}`}>
+                <p className="feedback-message">
+                  {feedback === "correct" ? "✅ Correct!" : "❌ Wrong!"}
+                </p>
+                {feedback === "wrong" && (
+                  <p className="correct-answer">
+                    Correct answer:{" "}
+                    <span className="arabic-text">{correctAnswer}</span>
+                  </p>
+                )}
+              </div>
             )}
             <button
               className="next-button"
