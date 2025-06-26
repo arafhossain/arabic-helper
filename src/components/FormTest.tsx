@@ -28,6 +28,8 @@ type AnswerData = {
   isCorrect: boolean;
 };
 
+const NUMBER_OF_VERBS_USED = 2;
+
 function removeTashkeel(word: string): string {
   return word.replace(/[َُِّْ]/g, "");
 }
@@ -63,7 +65,10 @@ export default function FormTest({ formData }: FormTestProps) {
       return shuffled.slice(0, count);
     }
 
-    const selectedTestSet = getRandomSubset(formData.testSet, 3);
+    const selectedTestSet = getRandomSubset(
+      formData.testSet,
+      NUMBER_OF_VERBS_USED
+    );
 
     const generated: TestQuestion[] = selectedTestSet.flatMap((verbData) =>
       tenses.map((tense) => {

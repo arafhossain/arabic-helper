@@ -17,6 +17,23 @@ type FormQuizProps = {
   setMode: (mode: ExerciseMode) => void;
 };
 
+type QuizQuestion = {
+  baseVerb: string;
+  tense: VerbTenseKey;
+  correctAnswer: string;
+  choices: string[];
+};
+
+type AnswerData = {
+  baseVerb: string;
+  tense: VerbTenseKey;
+  correct: string;
+  userAnswer: string;
+  isCorrect: boolean;
+};
+
+const NUMBER_OF_VERBS_USED = 2;
+
 function generateQuizChoices(correct: string): string[] {
   const distractors = generateTashkeelVariants(correct);
   const choices = [...distractors, correct];
@@ -85,21 +102,6 @@ function generateTashkeelVariants(correct: string, numVariants = 3): string[] {
   return Array.from(variants);
 }
 
-type QuizQuestion = {
-  baseVerb: string;
-  tense: VerbTenseKey;
-  correctAnswer: string;
-  choices: string[];
-};
-
-type AnswerData = {
-  baseVerb: string;
-  tense: VerbTenseKey;
-  correct: string;
-  userAnswer: string;
-  isCorrect: boolean;
-};
-
 export default function FormQuiz({ formData, setMode }: FormQuizProps) {
   const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>([]);
   const [userAnswers, setUserAnswers] = useState<AnswerData[]>([]);
@@ -123,7 +125,10 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
       return shuffled.slice(0, count);
     }
 
-    const selectedQuizSet = getRandomSubset(formData.quizSet, 3);
+    const selectedQuizSet = getRandomSubset(
+      formData.quizSet,
+      NUMBER_OF_VERBS_USED
+    );
 
     const generated: QuizQuestion[] = selectedQuizSet.flatMap((verbData) =>
       tenses.map((tense) => {
