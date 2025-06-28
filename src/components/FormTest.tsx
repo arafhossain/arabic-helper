@@ -7,7 +7,12 @@ import {
 } from "../models/VerbForm";
 import { ExerciseMode } from "./FormDetail";
 import "./FormTest.css";
-import { HARAKAT_VOWELS_WITH_SUKOON_AND_SHADDA } from "../data/arabicCharacters";
+import {
+  HARAKAT_TANWEEN,
+  HARAKAT_VOWELS_WITH_SUKOON_AND_SHADDA,
+  SHADDA,
+  TANWEEN_MAP,
+} from "../data/arabicCharacters";
 
 type FormTestProps = {
   formData: VerbForm;
@@ -30,6 +35,12 @@ type AnswerData = {
 
 const NUMBER_OF_VERBS_USED = 2;
 
+function isArabicLetter(char: string): boolean {
+  // Unicode Arabic range: basic letters
+  console.log(/[\u0621-\u064A]/.test(char));
+  return /[\u0621-\u064A]/.test(char);
+}
+
 function removeTashkeel(word: string): string {
   return word.replace(/[َُِّْ]/g, "");
 }
@@ -45,12 +56,10 @@ export default function FormTest({ formData }: FormTestProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [userInput, setUserInput] = useState("");
-  const [showAnswer, setShowAnswer] = useState(true);
+  const [showAnswer, setShowAnswer] = useState(false);
   const [showResult, setShowResult] = useState(false);
 
-  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(
-    "correct"
-  );
+  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -92,17 +101,55 @@ export default function FormTest({ formData }: FormTestProps) {
     setTestQuestions(generated);
   }, [formData]);
 
-  const isInvalidInput = (char: string) => {
-    // Double same vowel
-    if (userInput.charAt(userInput.length - 1) === char) return true;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const next = e.target.value;
+    const prev = userInput;
 
-    return false;
+    if (next.length < prev.length) {
+      setUserInput(next);
+      return;
+    }
+
+    const newChar = next[next.length - 1];
+    const updated = applyCharInput(prev, newChar);
+    setUserInput(updated);
   };
 
-  const handleCharClick = (char: string) => {
-    if (isInvalidInput(char)) return;
+  function applyCharInput(prev: string, char: string): string {
+    const space = " ";
 
-    setUserInput((prev) => prev + char);
+    if (char === space) return prev + space;
+
+    const isLetter = /^[\u0621-\u064A]$/.test(char);
+    const isHarakah = HARAKAT_VOWELS_WITH_SUKOON_AND_SHADDA.includes(char);
+    const isTanween = HARAKAT_TANWEEN.includes(char);
+    const lastChar = prev[prev.length - 1];
+
+    // Reject non-Arabic, non-harakah, non-space
+    if (
+      !isLetter &&
+      !isHarakah &&
+      !HARAKAT_TANWEEN.includes(char) &&
+      char !== SHADDA &&
+      char !== space
+    )
+      return prev;
+
+    if (isHarakah && char === lastChar && TANWEEN_MAP[char]) {
+      return prev.slice(0, -1) + TANWEEN_MAP[char];
+    }
+
+    if (!isLetter && !/[\u0621-\u064A]/.test(lastChar)) {
+      if (lastChar === SHADDA) return prev + char;
+      if (lastChar === char) return prev + char;
+      return prev;
+    }
+
+    return prev + char;
+  }
+
+  const handleCharClick = (char: string) => {
+    setUserInput((prev) => applyCharInput(prev, char));
   };
 
   const handleBackspace = () => {
@@ -180,13 +227,11 @@ export default function FormTest({ formData }: FormTestProps) {
 
         <div className="form-test-input-container">
           <input
-            className="form-test-input arabic-text"
+            className="arabic-text form-test-input"
             type="text"
             value={userInput}
             onChange={(e) => {
-              const char = e.target.value;
-              if (isInvalidInput(char)) return;
-              setUserInput(e.target.value);
+              handleChange(e);
             }}
             dir="rtl"
           />
@@ -206,6 +251,20 @@ export default function FormTest({ formData }: FormTestProps) {
           </div>
           <div className="keyboard-row keyboard-row-harakat">
             {HARAKAT_VOWELS_WITH_SUKOON_AND_SHADDA.map((char) => (
+              <button
+                key={char}
+                className="keyboard-button harakah-button arabic-text"
+                onClick={() => handleCharClick(char)}
+              >
+                {char}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="form-test-keyboard">
+          <div className="keyboard-row keyboard-row-harakat">
+            {HARAKAT_TANWEEN.map((char) => (
               <button
                 key={char}
                 className="keyboard-button harakah-button arabic-text"
