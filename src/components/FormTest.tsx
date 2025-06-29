@@ -8,6 +8,7 @@ import {
 import { ExerciseMode } from "./FormDetail";
 import "./FormTest.css";
 import {
+  EXTRA_PATTERN_LETTERS,
   HARAKAT_TANWEEN,
   HARAKAT_VOWELS_WITH_SUKOON_AND_SHADDA,
   SHADDA,
@@ -33,7 +34,7 @@ type AnswerData = {
   isCorrect: boolean;
 };
 
-const NUMBER_OF_VERBS_USED = 2;
+const NUMBER_OF_VERBS_USED = 1;
 
 function removeTashkeel(word: string): string {
   return word.replace(/[َُِّْ]/g, "");
@@ -58,6 +59,12 @@ export default function FormTest({ formData, setMode }: FormTestProps) {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
+    const GENERATED_QUESTIONS = generateTest();
+
+    setTestQuestions(GENERATED_QUESTIONS);
+  }, [formData]);
+
+  const generateTest = (): TestQuestion[] => {
     const tenses = Object.keys(VerbTenseLabels) as VerbTenseKey[];
 
     function getRandomSubset(
@@ -92,8 +99,8 @@ export default function FormTest({ formData, setMode }: FormTestProps) {
       [generated[i], generated[j]] = [generated[j], generated[i]];
     }
 
-    setTestQuestions(generated);
-  }, [formData]);
+    return generated;
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const next = e.target.value;
@@ -207,121 +214,184 @@ export default function FormTest({ formData, setMode }: FormTestProps) {
     const letters = getUniqueLetters(questionData?.baseVerb);
 
     return (
-      <div className="form-test-wrapper">
-        <button
-          className="quit-button top-right"
-          onClick={() => setMode("default")}
-        >
-          Quit
-        </button>
-        <div className="form-test-question">
-          <h1 style={{ marginBottom: "6px" }}>{formData.name}</h1>
-          <span style={{ color: "gray", fontSize: "1.2rem" }}>
-            Question {currentIndex + 1} of {testQuestions.length}
-          </span>
-          <h2>
-            What is the {VerbTenseLabels[tense].toUpperCase()} form of{" "}
-            <span className="arabic-text">{questionData.baseVerb}</span>?
-          </h2>
-        </div>
-
-        <div className="form-test-input-container">
-          <input
-            className="arabic-text form-test-input"
-            type="text"
-            value={userInput}
-            onChange={(e) => {
-              handleChange(e);
-            }}
-            dir="rtl"
-          />
-        </div>
-
-        <div className="form-test-keyboard">
-          <div className="keyboard-row keyboard-row-letters">
-            {letters.reverse().map((char) => (
-              <button
-                key={char}
-                className="keyboard-button arabic-text"
-                onClick={() => handleCharClick(char)}
-              >
-                {char}
-              </button>
-            ))}
-          </div>
-          <div className="keyboard-row keyboard-row-harakat">
-            {HARAKAT_VOWELS_WITH_SUKOON_AND_SHADDA.map((char) => (
-              <button
-                key={char}
-                className="keyboard-button harakah-button arabic-text"
-                onClick={() => handleCharClick(char)}
-              >
-                {char}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="form-test-keyboard">
-          <div className="keyboard-row keyboard-row-harakat">
-            {HARAKAT_TANWEEN.map((char) => (
-              <button
-                key={char}
-                className="keyboard-button harakah-button arabic-text"
-                onClick={() => handleCharClick(char)}
-              >
-                {char}
-              </button>
-            ))}
+      <div className="test-container">
+        {showResult ? (
+          <div>
             <button
-              className="keyboard-button control-button"
-              onClick={handleBackspace}
+              className="quit-button top-right"
+              onClick={() => setMode("default")}
             >
-              ⌫
+              Quit
             </button>
-            <button
-              className="keyboard-button control-button"
-              onClick={handleClear}
-            >
-              ✖
-            </button>
+            <h2>Test Complete!</h2>
+            <p>
+              You got {score} out of {testQuestions.length} correct.
+            </p>
+            <table className="result-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Verb</th>
+                  <th>Tense</th>
+                  <th>Your Answer</th>
+                  <th>Correct Answer</th>
+                  <th>✅</th>
+                </tr>
+              </thead>
+              <tbody>
+                {userAnswers.map((answerData, idx) => (
+                  <tr key={idx}>
+                    <td>{idx + 1}.</td>
+                    <td>
+                      {" "}
+                      <span className="arabic-text">{answerData.baseVerb}</span>
+                    </td>
+                    <td>{VerbTenseLabels[answerData.tense]}</td>
+                    <td>
+                      <span
+                        className={`arabic-text ${
+                          !answerData.isCorrect ? "wrong" : ""
+                        }`}
+                      >
+                        {answerData.userAnswer}
+                      </span>
+                    </td>
+                    <td>
+                      <span className="arabic-text">{answerData.correct}</span>
+                    </td>
+                    <td>{answerData.isCorrect ? "✅" : "❌"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        </div>
+        ) : (
+          <div className="form-test-wrapper">
+            <div className="form-test-question">
+              <h1 style={{ marginBottom: "6px" }}>{formData.name}</h1>
+              <span style={{ color: "gray", fontSize: "1.2rem" }}>
+                Question {currentIndex + 1} of {testQuestions.length}
+              </span>
+              <h2>
+                What is the {VerbTenseLabels[tense].toUpperCase()} form of{" "}
+                <span className="arabic-text">{questionData.baseVerb}</span>?
+              </h2>
+            </div>
 
-        <div className="form-test-controls">
-          <button
-            className="submit-button"
-            onClick={() => {
-              handleAnswerClick(questionData);
-            }}
-            disabled={userInput.trim() === ""}
-          >
-            Submit
-          </button>
-        </div>
-        {showAnswer && (
-          <div className="form-test-result">
-            {feedback && (
-              <div className={`form-test-feedback ${feedback}`}>
-                <p className="feedback-message">
-                  {feedback === "correct" ? "✅ Correct!" : "❌ Wrong!"}
-                </p>
-                {feedback === "wrong" && (
-                  <p className="correct-answer">
-                    Correct answer:{" "}
-                    <span className="arabic-text">{correctAnswer}</span>
-                  </p>
+            <div className="form-test-input-container">
+              <input
+                className="arabic-text form-test-input"
+                type="text"
+                value={userInput}
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+                dir="rtl"
+              />
+            </div>
+
+            {showAnswer && (
+              <div className="form-test-result">
+                {feedback && (
+                  <div className={`form-test-feedback ${feedback}`}>
+                    <p className="feedback-message">
+                      {feedback === "correct" ? "✅ Correct!" : "❌ Wrong!"}
+                    </p>
+                    {feedback === "wrong" && (
+                      <p className="correct-answer">
+                        Correct answer:{" "}
+                        <span className="arabic-text">{correctAnswer}</span>
+                      </p>
+                    )}
+                  </div>
                 )}
               </div>
             )}
-            <button
-              className="next-button"
-              onClick={() => {
-                handleNextQuestion();
-              }}
-            >
-              Next
-            </button>
+
+            {!showAnswer && (
+              <div className="form-test-keyboard">
+                <div className="keyboard-row keyboard-row-letters">
+                  {letters.reverse().map((char) => (
+                    <button
+                      key={char}
+                      className="keyboard-button arabic-text"
+                      onClick={() => handleCharClick(char)}
+                    >
+                      {char}
+                    </button>
+                  ))}
+                </div>
+                <div className="keyboard-row keyboard-row-letters">
+                  {EXTRA_PATTERN_LETTERS.map((char) => (
+                    <button
+                      key={char}
+                      className="keyboard-button arabic-text"
+                      onClick={() => handleCharClick(char)}
+                    >
+                      {char}
+                    </button>
+                  ))}
+                </div>
+                <div className="keyboard-row keyboard-row-harakat">
+                  {HARAKAT_VOWELS_WITH_SUKOON_AND_SHADDA.map((char) => (
+                    <button
+                      key={char}
+                      className="keyboard-button harakah-button arabic-text"
+                      onClick={() => handleCharClick(char)}
+                    >
+                      {char}
+                    </button>
+                  ))}
+                </div>
+                <div className="keyboard-row keyboard-row-harakat">
+                  {HARAKAT_TANWEEN.map((char) => (
+                    <button
+                      key={char}
+                      className="keyboard-button harakah-button arabic-text"
+                      onClick={() => handleCharClick(char)}
+                    >
+                      {char}
+                    </button>
+                  ))}
+                  <button
+                    className="keyboard-button control-button"
+                    onClick={handleBackspace}
+                  >
+                    ⌫
+                  </button>
+                  <button
+                    className="keyboard-button control-button"
+                    onClick={handleClear}
+                  >
+                    ✖
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <div className="form-test-controls">
+              {showAnswer && (
+                <button
+                  className="next-button"
+                  onClick={() => {
+                    handleNextQuestion();
+                  }}
+                >
+                  Next
+                </button>
+              )}
+              {!showAnswer && (
+                <button
+                  className="submit-button"
+                  onClick={() => {
+                    handleAnswerClick(questionData);
+                  }}
+                  disabled={userInput.trim() === ""}
+                >
+                  Submit
+                </button>
+              )}
+            </div>
           </div>
         )}
       </div>
