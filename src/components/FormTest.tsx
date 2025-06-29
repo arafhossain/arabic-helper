@@ -35,12 +35,6 @@ type AnswerData = {
 
 const NUMBER_OF_VERBS_USED = 2;
 
-function isArabicLetter(char: string): boolean {
-  // Unicode Arabic range: basic letters
-  console.log(/[\u0621-\u064A]/.test(char));
-  return /[\u0621-\u064A]/.test(char);
-}
-
 function removeTashkeel(word: string): string {
   return word.replace(/[َُِّْ]/g, "");
 }
@@ -50,7 +44,7 @@ function getUniqueLetters(word: string): string[] {
   return Array.from(new Set(removeTashkeel(word).split("")));
 }
 
-export default function FormTest({ formData }: FormTestProps) {
+export default function FormTest({ formData, setMode }: FormTestProps) {
   const [testQuestions, setTestQuestions] = useState<TestQuestion[]>([]);
   const [userAnswers, setUserAnswers] = useState<AnswerData[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -214,6 +208,12 @@ export default function FormTest({ formData }: FormTestProps) {
 
     return (
       <div className="form-test-wrapper">
+        <button
+          className="quit-button top-right"
+          onClick={() => setMode("default")}
+        >
+          Quit
+        </button>
         <div className="form-test-question">
           <h1 style={{ marginBottom: "6px" }}>{formData.name}</h1>
           <span style={{ color: "gray", fontSize: "1.2rem" }}>
