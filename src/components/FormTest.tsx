@@ -267,6 +267,12 @@ export default function FormTest({ formData, setMode }: FormTestProps) {
           </div>
         ) : (
           <div className="form-test-wrapper">
+            <button
+              className="quit-button top-right test-mode"
+              onClick={() => setMode("default")}
+            >
+              Quit
+            </button>
             <div className="form-test-question">
               <h1 style={{ marginBottom: "6px" }}>{formData.name}</h1>
               <span style={{ color: "gray", fontSize: "1.2rem" }}>

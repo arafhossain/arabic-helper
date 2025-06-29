@@ -12,6 +12,9 @@
   font-size: 2rem;
   margin-bottom: 1.5rem;
   font-weight: 600;
+  @media (max-width: 600px) {
+    font-size: 1.6rem;
+  }
 }
 
 .result-table {
@@ -27,13 +30,19 @@
 }
 
 .form-test-wrapper {
-  min-width: 500px;
-  max-width: 600px;
+  width: 700px;
   margin: 0 auto;
   padding: 24px;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   background-color: #fafafa;
+  height: 660px;
+  @media (max-width: 600px) {
+    align-items: center;
+    margin-bottom: 9px;
+    width: auto;
+    height: auto;
+  }
 }
 
 .quit-button.top-right {
@@ -48,6 +57,13 @@
   font-weight: 600;
   cursor: pointer;
   z-index: 10;
+
+  &&.test-mode {
+    @media (max-width: 600px) {
+      top: 50px;
+      right: 34px;
+    }
+  }
 }
 
 .form-test-question {
