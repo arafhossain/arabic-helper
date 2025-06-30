@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { LearnCard, VerbForm, VerbTenseLabels } from "../models/VerbForm";
+import { VerbForm, VerbTenseLabels } from "../models/Verb";
 import { ExerciseMode } from "./FormDetail";
+import { LearnCard } from "../models/Learn";
 
 type IFormLearn = {
   formData: VerbForm;

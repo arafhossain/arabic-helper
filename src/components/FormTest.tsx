@@ -1,10 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import {
-  QuestionCard,
-  VerbForm,
-  VerbTenseKey,
-  VerbTenseLabels,
-} from "../models/VerbForm";
+import { VerbForm, VerbTenseKey, VerbTenseLabels } from "../models/Verb";
 import { ExerciseMode } from "./FormDetail";
 import "./FormTest.css";
 import {
@@ -14,6 +9,7 @@ import {
   SHADDA,
   TANWEEN_MAP,
 } from "../data/arabicCharacters";
+import { QuestionCard } from "../models/Question";
 
 type FormTestProps = {
   formData: VerbForm;
@@ -123,7 +119,6 @@ export default function FormTest({ formData, setMode }: FormTestProps) {
 
     const isLetter = /^[\u0621-\u064A]$/.test(char);
     const isHarakah = HARAKAT_VOWELS_WITH_SUKOON_AND_SHADDA.includes(char);
-    const isTanween = HARAKAT_TANWEEN.includes(char);
     const lastChar = prev[prev.length - 1];
 
     // Reject non-Arabic, non-harakah, non-space

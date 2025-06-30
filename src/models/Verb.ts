@@ -1,3 +1,6 @@
+import { LearnCard } from "./Learn";
+import { QuestionCard } from "./Question";
+
 export type ModeType = "quiz" | "learn" | "test";
 
 export type VerbTenseKey =
@@ -37,21 +40,4 @@ export interface VerbForm {
   testSet: QuestionCard[];
   hideModes?: HiddenMode[];
   disclaimer?: string;
-}
-
-export interface LearnCard {
-  tense: VerbTenseKey;
-  verb: string;
-}
-
-export interface QuestionCard {
-  baseVerb: string;
-  tenses: {
-    past: string;
-    present: string;
-    command: string;
-    verbalNoun: string;
-    doerPattern: string;
-    receiverPattern: string;
-  };
 }

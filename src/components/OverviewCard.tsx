@@ -1,5 +1,5 @@
 import React from "react";
-import { ModeType, VerbForm, VerbTenseLabels } from "../models/VerbForm";
+import { ModeType, VerbForm, VerbTenseLabels } from "../models/Verb";
 import "./OverviewCard.css";
 
 type IOverviewCardProps = {

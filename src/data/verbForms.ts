@@ -1,4 +1,4 @@
-import { VerbForm } from "../models/VerbForm";
+import { VerbForm } from "../models/Verb";
 
 export const verbFormsData: VerbForm[] = [
   {

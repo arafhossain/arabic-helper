@@ -1,16 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  VerbForm,
-  VerbTenseLabels,
-  VerbTenseKey,
-  QuestionCard,
-} from "../models/VerbForm";
+import { VerbForm, VerbTenseLabels, VerbTenseKey } from "../models/Verb";
 import { ExerciseMode } from "./FormDetail";
 import "./FormQuiz.css";
 import {
   HARAKAT_VOWELS_WITH_SUKOON,
   HARAKAT_VOWELS,
 } from "../data/arabicCharacters";
+import { QuestionCard } from "../models/Question";
 
 type FormQuizProps = {
   formData: VerbForm;
