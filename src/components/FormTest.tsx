@@ -199,6 +199,20 @@ export default function FormTest({ formData, setMode }: FormTestProps) {
     }
   }
 
+  function retry() {
+    const GENERATED_QUESTIONS = generateTest();
+
+    setTestQuestions(GENERATED_QUESTIONS);
+
+    setCurrentIndex(0);
+    setUserInput("");
+    setScore(0);
+    setUserAnswers([]);
+    setFeedback(null);
+    setShowAnswer(false);
+    setShowResult(false);
+  }
+
   if (testQuestions.length === 0) {
     return <div>Loading Test...</div>;
   } else {
@@ -259,6 +273,16 @@ export default function FormTest({ formData, setMode }: FormTestProps) {
                 ))}
               </tbody>
             </table>
+            <div className="form-test-controls">
+              <button
+                className="retry-button"
+                onClick={() => {
+                  retry();
+                }}
+              >
+                Retry
+              </button>
+            </div>
           </div>
         ) : (
           <div className="form-test-wrapper">

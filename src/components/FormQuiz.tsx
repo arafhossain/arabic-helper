@@ -104,13 +104,19 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-  const [showResult, setShowResult] = useState(false);
+  const [showResult, setShowResult] = useState(true);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
   const [showNextButton, setShowNextButton] = useState(false);
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
+    const GENERATED_QUESTIONS = generateQuiz();
+
+    setQuizQuestions(GENERATED_QUESTIONS);
+  }, [formData]);
+
+  const generateQuiz = (): QuizQuestion[] => {
     const tenses = Object.keys(VerbTenseLabels) as VerbTenseKey[];
 
     function getRandomSubset(
@@ -147,8 +153,8 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
       [generated[i], generated[j]] = [generated[j], generated[i]];
     }
 
-    setQuizQuestions(generated);
-  }, [formData]);
+    return generated;
+  };
 
   function handleAnswerClick(choice: string, correct: string) {
     setSelectedAnswer(choice);
@@ -193,6 +199,20 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
     } else {
       setShowResult(true);
     }
+  }
+
+  function retry() {
+    const GENERATED_QUESTIONS = generateQuiz();
+
+    setQuizQuestions(GENERATED_QUESTIONS);
+
+    setCurrentIndex(0);
+    setSelectedAnswer(null);
+    setScore(0);
+    setUserAnswers([]);
+    setFeedback(null);
+    setShowNextButton(false);
+    setShowResult(false);
   }
 
   if (quizQuestions.length === 0) {
@@ -252,6 +272,15 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
                 ))}
               </tbody>
             </table>
+            <div className="quiz-feedback-container">
+              <button
+                onClick={() => {
+                  retry();
+                }}
+              >
+                Retry
+              </button>
+            </div>
           </div>
         ) : (
           <div>
