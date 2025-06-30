@@ -1,0 +1,50 @@
+.overview {
+  text-align: center;
+  margin-top: 2rem;
+  .title {
+    margin-bottom: 0;
+  }
+  .meaning {
+    font-style: italic;
+  }
+  .card-container {
+    margin: auto auto 2rem auto;
+    display: flex;
+    flex-wrap: wrap;
+    width: 70%;
+    justify-items: center;
+    @media (min-width: 1800px) {
+      width: 65%;
+    }
+    @media (max-width: 600px) {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  .card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 0.5rem auto;
+    width: 300px;
+    .title {
+      margin-bottom: 0.3rem;
+    }
+    .verb {
+      font-size: 2rem;
+    }
+  }
+
+  .footer {
+    margin-top: 2rem;
+    @media (max-width: 600px) {
+      margin-top: 1rem;
+    }
+  }
+
+  .button {
+    margin: 0.5rem;
+    padding: 1rem;
+  }
+}

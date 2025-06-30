@@ -1,5 +1,6 @@
 import React from "react";
 import { ModeType, VerbForm, VerbTenseLabels } from "../models/VerbForm";
+import "./OverviewCard.css";
 
 type IOverviewCardProps = {
   formData: VerbForm;
@@ -11,33 +12,20 @@ export default function OverviewCard({
   setMode,
 }: IOverviewCardProps) {
   return (
-    <div style={{ textAlign: "center", marginTop: "2rem" }}>
-      <h2 style={{ marginBottom: "0" }}>{formData.name}</h2>
-      <p style={{ fontStyle: "italic" }}>{formData.meaning}</p>
+    <div className="overview">
+      <h2 className="title">{formData.name}</h2>
+      <p className="meaning">{formData.meaning}</p>
 
-      <div style={{ marginTop: "2rem" }}>
+      <div className="card-container">
         {formData.learnSet.map((form, idx) => (
-          <div
-            key={idx}
-            style={{
-              border: "1px solid #ccc",
-              borderRadius: "8px",
-              padding: "1rem",
-              margin: "0.5rem auto",
-              maxWidth: "300px",
-            }}
-          >
-            <h4 style={{ marginBottom: "0.3rem" }}>
-              {VerbTenseLabels[form.tense]}
-            </h4>
-            <p style={{ fontSize: "2rem" }} className="arabic-text">
-              {form.verb}
-            </p>
+          <div key={idx} className="card">
+            <h4 className="title">{VerbTenseLabels[form.tense]}</h4>
+            <p className="arabic-text verb">{form.verb}</p>
           </div>
         ))}
       </div>
 
-      <div style={{ marginTop: "2rem" }}>
+      <div className="footer">
         {formData.disclaimer && (
           <p className="form-disclaimer">{formData.disclaimer}</p>
         )}
@@ -48,8 +36,7 @@ export default function OverviewCard({
           return (
             <button
               key={mode}
-              style={{ margin: "0.5rem", padding: "1rem" }}
-              className={`mode-button ${isDisabled ? "disabled" : ""}`}
+              className={`mode-button button ${isDisabled ? "disabled" : ""}`}
               disabled={isDisabled}
               onClick={() => !isDisabled && setMode(mode)}
               data-tooltip={isDisabled ? hiddenMode?.tooltip : undefined}
