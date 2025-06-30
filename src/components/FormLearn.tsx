@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { VerbForm, VerbTenseLabels } from "../models/Verb";
 import { ExerciseMode } from "./FormDetail";
 import { LearnCard } from "../models/Learn";
+import "./FormLearn.css";
 
 type IFormLearn = {
   formData: VerbForm;
@@ -21,73 +22,41 @@ export default function FormLearn({ formData, setMode }: IFormLearn) {
       setLearningIndex((prev) => prev + 1);
       setShowAnswer(false);
     } else {
-      setMode("default");
       setLearningIndex(0);
       setShowAnswer(false);
     }
   };
 
   return (
-    <div
-      style={{
-        marginTop: "2rem",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-      <h2 style={{ marginBottom: "0" }}>{formData.name}</h2>
-      <p style={{ fontStyle: "italic" }}>{formData.meaning}</p>
-      <p style={{ fontSize: "1rem", marginBottom: "1rem" }}>
+    <div className="form-learn-wrapper">
+      <button
+        className="quit-button top-right"
+        onClick={() => setMode("default")}
+      >
+        Quit
+      </button>
+      <h2 className="form-learn-title">{formData.name}</h2>
+      <p className="form-learn-meaning">{formData.meaning}</p>
+      <p className="form-learn-count">
         Card {learningIndex + 1} of {formData.learnSet.length}
       </p>
 
       <div
-        style={{
-          border: "1px solid #ccc",
-          borderRadius: "8px",
-          padding: "2rem",
-          width: "300px",
-          height: "40px",
-          fontSize: "2rem",
-          cursor: "pointer",
-          backgroundColor: "#f9f9f9",
-          textAlign: "center",
-          marginBottom: "1rem",
-        }}
-        className={showAnswer ? "arabic-text" : ""}
+        className={`form-learn-card ${showAnswer ? "arabic-text" : ""}`}
         onClick={() => setShowAnswer(!showAnswer)}
       >
         {showAnswer ? currentCard.verb : VerbTenseLabels[currentCard.tense]}
       </div>
 
       <button
+        className="form-learn-flip"
         onClick={() => setShowAnswer(!showAnswer)}
-        style={{
-          padding: "0.5rem 1rem",
-          marginBottom: "1rem",
-          backgroundColor: "var(--secondary-color)",
-          color: "var(--primary-color)",
-          border: "none",
-          borderRadius: "6px",
-          cursor: "pointer",
-        }}
       >
         Flip
       </button>
 
-      <button
-        onClick={handleNext}
-        style={{
-          padding: "0.75rem 1.5rem",
-          backgroundColor: "var(--primary-color)",
-          color: "var(--font-color)",
-          border: "none",
-          borderRadius: "6px",
-          cursor: "pointer",
-        }}
-      >
-        {learningIndex < formData.learnSet.length - 1 ? "Next" : "Finish"}
+      <button className="form-learn-next" onClick={handleNext}>
+        {learningIndex < formData.learnSet.length - 1 ? "Next" : "Retry"}
       </button>
     </div>
   );
