@@ -24,11 +24,14 @@ export const verbFormsData: VerbForm[] = [
       },
     ],
     disclaimer:
-      "This form lacks a consistent pattern. The examples provided (past, present, command) are for reference only. Interactive learning is disabled for this form.",
+      "This form lacks a consistent pattern. The examples provided are for reference only. Interactive learning is disabled for this form.",
     learnSet: [
       { tense: "past", verb: "فَعَلَ" },
       { tense: "present", verb: "يَفْعَلُ" },
       { tense: "command", verb: "اِفْعَلْ" },
+      { tense: "verbalNoun", verb: "فِعْلٌ" },
+      { tense: "doerPattern", verb: "فَاعِلٌ" },
+      { tense: "receiverPattern", verb: "مَفْعُولٌ" },
     ],
     questionSet: [],
   },
