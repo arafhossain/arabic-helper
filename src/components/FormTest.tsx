@@ -71,12 +71,12 @@ export default function FormTest({ formData, setMode }: FormTestProps) {
       return shuffled.slice(0, count);
     }
 
-    const selectedTestSet = getRandomSubset(
-      formData.testSet,
+    const selectedquestionSet = getRandomSubset(
+      formData.questionSet,
       NUMBER_OF_VERBS_USED
     );
 
-    const generated: TestQuestion[] = selectedTestSet.flatMap((verbData) =>
+    const generated: TestQuestion[] = selectedquestionSet.flatMap((verbData) =>
       tenses.map((tense) => {
         const correct = verbData.tenses[tense];
 

@@ -127,12 +127,12 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
       return shuffled.slice(0, count);
     }
 
-    const selectedQuizSet = getRandomSubset(
-      formData.quizSet,
+    const selectedquestionSet = getRandomSubset(
+      formData.questionSet,
       NUMBER_OF_VERBS_USED
     );
 
-    const generated: QuizQuestion[] = selectedQuizSet.flatMap((verbData) =>
+    const generated: QuizQuestion[] = selectedquestionSet.flatMap((verbData) =>
       tenses.map((tense) => {
         const correct = verbData.tenses[tense];
         const choices = generateQuizChoices(correct);

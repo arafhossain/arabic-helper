@@ -36,8 +36,7 @@ export interface VerbForm {
   meaning: string;
   root: string;
   learnSet: LearnCard[];
-  quizSet: QuestionCard[];
-  testSet: QuestionCard[];
+  questionSet: QuestionCard[];
   hideModes?: HiddenMode[];
   disclaimer?: string;
 }
