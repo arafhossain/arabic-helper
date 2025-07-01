@@ -103,7 +103,7 @@ p {
 }
 
 .mode-button {
-  padding: 12px 20px;
+  /* padding: 12px 20px; */
   border: none;
   border-radius: 6px;
   background-color: maroon;
