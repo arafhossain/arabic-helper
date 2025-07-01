@@ -144,6 +144,26 @@ export default function FormTest({ formData, setMode }: FormTestProps) {
     return prev + char;
   }
 
+  function normalizeInput(input: string, tense: VerbTenseKey): string {
+    const trimmed = input.trim();
+
+    if (["verbalNoun", "doerPattern", "receiverPattern"].includes(tense)) {
+      let normalized = trimmed;
+
+      // If user input ends with ًا (fatḥatayn on seat alif), remove both
+      if (trimmed.endsWith("ًا")) {
+        normalized = normalized.replace(/ًا$/, "");
+      } else {
+        // Otherwise, just remove any remaining final tanwin (ً, ٌ, ٍ)
+        normalized = normalized.replace(/[ًٌٍ]$/, "");
+      }
+
+      return normalized;
+    }
+
+    return trimmed;
+  }
+
   const handleCharClick = (char: string) => {
     setUserInput((prev) => applyCharInput(prev, char));
   };
@@ -157,7 +177,9 @@ export default function FormTest({ formData, setMode }: FormTestProps) {
   };
 
   function handleAnswerClick(questionData: TestQuestion) {
-    const IS_CORRECT = userInput === questionData.correctAnswer;
+    const IS_CORRECT =
+      normalizeInput(userInput, questionData.tense) ===
+      normalizeInput(questionData.correctAnswer, questionData.tense);
 
     setShowAnswer(true);
 
