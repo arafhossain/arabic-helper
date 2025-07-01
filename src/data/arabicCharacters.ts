@@ -10,4 +10,14 @@ export const TANWEEN_MAP: Record<string, string> = {
   "ُ": "ٌ",
 };
 
-export const EXTRA_PATTERN_LETTERS = ["م", "ا", "ء", "أ", "إ"];
+export const EXTRA_PATTERN_LETTERS = [
+  "ت",
+  "ي",
+  "ن",
+  "ا",
+  "م",
+  "ة",
+  "ء",
+  "إ",
+  "أ",
+];

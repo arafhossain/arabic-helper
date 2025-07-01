@@ -102,7 +102,9 @@
   gap: 12px;
   margin-bottom: 24px;
   align-items: center;
-  min-height: 265px;
+  @media (max-width: 600px) {
+    min-height: 335px;
+  }
 }
 
 .keyboard-row {
@@ -172,7 +174,7 @@
   margin-bottom: 24px;
   @media (max-width: 600px) {
     align-items: center;
-    height: 280px;
+    height: 350px;
     margin-bottom: 9px;
   }
 }
