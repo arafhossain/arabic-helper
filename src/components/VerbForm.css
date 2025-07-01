@@ -7,7 +7,7 @@
 }
 
 .form-button {
-  background-color: var(--primary-color); /* your maroon */
+  background-color: var(--primary-color);
   color: white;
   font-weight: 600;
   font-size: 1rem;

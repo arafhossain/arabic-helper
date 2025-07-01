@@ -107,7 +107,7 @@ p {
   /* padding: 12px 20px; */
   border: none;
   border-radius: 6px;
-  background-color: maroon;
+  background-color: var(--primary-color);
   color: white;
   cursor: pointer;
   font-weight: 600;

@@ -12,7 +12,7 @@
   position: absolute;
   top: 1.5rem;
   right: 1rem;
-  background-color: maroon;
+  background-color: var(--primary-color);
   color: white;
   border: none;
   /* padding: 8px 16px; */
