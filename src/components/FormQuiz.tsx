@@ -105,8 +105,8 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
-  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
-  const [showNextButton, setShowNextButton] = useState(true);
+  // const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
+  const [showNextButton, setShowNextButton] = useState(false);
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -163,9 +163,9 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
 
     if (IS_CORRECT) {
       setScore((prev) => prev + 1);
-      setFeedback("correct");
+      // setFeedback("correct");
     } else {
-      setFeedback("wrong");
+      // setFeedback("wrong");
     }
 
     const ANSWER_DATA: AnswerData = {
@@ -194,7 +194,7 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
     if (currentIndex + 1 < quizQuestions.length) {
       setCurrentIndex((prev) => prev + 1);
       setSelectedAnswer(null);
-      setFeedback(null);
+      // setFeedback(null);
       setShowNextButton(false);
     } else {
       setShowResult(true);
@@ -210,7 +210,7 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
     setSelectedAnswer(null);
     setScore(0);
     setUserAnswers([]);
-    setFeedback(null);
+    // setFeedback(null);
     setShowNextButton(false);
     setShowResult(false);
   }
