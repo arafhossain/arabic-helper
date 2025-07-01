@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import BreadcrumbBar from "./BreadcrumbBar";
 import { verbFormsData } from "../data/verbForms";
+import "./VerbForm.css";
 
 const VerbForms = () => {
   return (
@@ -15,12 +16,10 @@ const VerbForms = () => {
         <h2>Verb Forms</h2>
         <p>Select a verb form to begin:</p>
 
-        <div style={{ marginTop: "2rem" }}>
+        <div className="form-button-container">
           {verbFormsData.map((verbForm) => (
             <Link to={`/verb-forms/${verbForm.id}`}>
-              <button style={{ margin: "0.5rem", padding: "1rem" }}>
-                {verbForm.name}
-              </button>
+              <button className="form-button">{verbForm.name}</button>
             </Link>
           ))}
         </div>
