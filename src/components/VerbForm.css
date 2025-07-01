@@ -18,10 +18,12 @@
   transition: transform 0.1s ease, box-shadow 0.2s ease;
 }
 
-.form-button:hover,
-.form-button:focus {
-  background-color: var(--secondary-color);
-  color: var(--primary-color);
-  transform: scale(1.03);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+@media (hover: hover) and (pointer: fine) {
+  .form-button:hover,
+  .form-button:focus {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    transform: scale(1.03);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
 }
