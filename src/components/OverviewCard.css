@@ -49,4 +49,8 @@
     margin: 0.5rem;
     padding: 1rem;
   }
+  .button:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+  }
 }

@@ -26,6 +26,10 @@
   font-weight: 600;
   cursor: pointer;
   z-index: 10;
+  &:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+  }
 }
 
 .quiz-feedback-container {
@@ -139,6 +143,11 @@
     border-radius: 6px;
     cursor: pointer;
     font-weight: 600;
+  }
+  button:hover,
+  .button-ghost :hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
   }
 }
 
