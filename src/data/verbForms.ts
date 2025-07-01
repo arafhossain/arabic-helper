@@ -145,4 +145,55 @@ export const verbFormsData: VerbForm[] = [
       },
     ],
   },
+  {
+    id: "form-iv",
+    formNumber: 4,
+    name: "Form IV",
+    meaning: "Causative",
+    root: "أَفْعَلَ",
+    hideModes: [],
+    learnSet: [
+      { tense: "past", verb: "أَفْعَلَ" },
+      { tense: "present", verb: "يُفْعِلُ" },
+      { tense: "command", verb: "أَفْعِلْ" },
+      { tense: "verbalNoun", verb: "إِفْعَالٌ" },
+      { tense: "doerPattern", verb: "مُفْعِلٌ" },
+      { tense: "receiverPattern", verb: "مُفْعَلٌ" },
+    ],
+    questionSet: [
+      {
+        baseVerb: "خرج",
+        tenses: {
+          past: "أَخْرَجَ",
+          present: "يُخْرِجُ",
+          command: "أَخْرِجْ",
+          verbalNoun: "إِخْرَاجٌ",
+          doerPattern: "مُخْرِجٌ",
+          receiverPattern: "مُخْرَجٌ",
+        },
+      },
+      {
+        baseVerb: "لبس",
+        tenses: {
+          past: "أَلْبَسَ",
+          present: "يُلْبِسُ",
+          command: "أَلْبِسْ",
+          verbalNoun: "إِلْبَاسٌ",
+          doerPattern: "مُلْبِسٌ",
+          receiverPattern: "مُلْبَسٌ",
+        },
+      },
+      {
+        baseVerb: "شرك",
+        tenses: {
+          past: "أَشْرَكَ",
+          present: "يُشْرِكُ",
+          command: "أَشْرِكْ",
+          verbalNoun: "إِشْرَاكٌ",
+          doerPattern: "مُشْرِكٌ",
+          receiverPattern: "مُشْرَكٌ",
+        },
+      },
+    ],
+  },
 ];
