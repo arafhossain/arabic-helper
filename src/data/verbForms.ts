@@ -94,4 +94,55 @@ export const verbFormsData: VerbForm[] = [
       },
     ],
   },
+  {
+    id: "form-iii",
+    formNumber: 3,
+    name: "Form III",
+    meaning: "Mutuality",
+    root: "فَاعَلَ",
+    hideModes: [],
+    learnSet: [
+      { tense: "past", verb: "فَاعَلَ" },
+      { tense: "present", verb: "يُفَاعِلُ" },
+      { tense: "command", verb: "فَاعِلْ" },
+      { tense: "verbalNoun", verb: "مُفَاعَلَةٌ" },
+      { tense: "doerPattern", verb: "مُفَاعِلٌ" },
+      { tense: "receiverPattern", verb: "مُفَاعَلٌ" },
+    ],
+    questionSet: [
+      {
+        baseVerb: "قاتل",
+        tenses: {
+          past: "قَاتَلَ",
+          present: "يُقَاتِلُ",
+          command: "قَاتِلْ",
+          verbalNoun: "مُقَاتَلَةٌ",
+          doerPattern: "مُقَاتِلٌ",
+          receiverPattern: "مُقَاتَلٌ",
+        },
+      },
+      {
+        baseVerb: "عاهد",
+        tenses: {
+          past: "عَاهَدَ",
+          present: "يُعَاهِدُ",
+          command: "عَاهِدْ",
+          verbalNoun: "مُعَاهَدَةٌ",
+          doerPattern: "مُعَاهِدٌ",
+          receiverPattern: "مُعَاهَدٌ",
+        },
+      },
+      {
+        baseVerb: "شارك",
+        tenses: {
+          past: "شَارَكَ",
+          present: "يُشَارِكُ",
+          command: "شَارِكْ",
+          verbalNoun: "مُشَارَكَةٌ",
+          doerPattern: "مُشَارِكٌ",
+          receiverPattern: "مُشَارَكٌ",
+        },
+      },
+    ],
+  },
 ];
