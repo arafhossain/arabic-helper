@@ -82,6 +82,8 @@
 }
 
 .button-row {
+  margin-bottom: 3rem;
+
   button {
     margin: 0.5rem;
     /* padding: 10px 18px; */
