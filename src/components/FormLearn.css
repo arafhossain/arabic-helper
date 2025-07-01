@@ -10,8 +10,8 @@
 
 .quit-button.top-right {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 1.5rem;
+  right: 1rem;
   background-color: maroon;
   color: white;
   border: none;
