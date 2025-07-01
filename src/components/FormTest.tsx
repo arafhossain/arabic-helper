@@ -30,7 +30,7 @@ type AnswerData = {
   isCorrect: boolean;
 };
 
-const NUMBER_OF_VERBS_USED = 1;
+const NUMBER_OF_VERBS_USED = 2;
 
 function removeTashkeel(word: string): string {
   return word.replace(/[َُِّْ]/g, "");
@@ -267,16 +267,6 @@ export default function FormTest({ formData, setMode }: FormTestProps) {
                 ))}
               </tbody>
             </table>
-            {/* <div className="form-test-controls">
-              <button
-                className="retry-button"
-                onClick={() => {
-                  retry();
-                }}
-              >
-                Retry
-              </button>
-            </div> */}
             <div className="button-row">
               <button
                 className="form-learn-next"
