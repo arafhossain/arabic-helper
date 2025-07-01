@@ -51,7 +51,7 @@ export default function FormTest({ formData, setMode }: FormTestProps) {
   const [userInput, setUserInput] = useState("");
   const [showAnswer, setShowAnswer] = useState(false);
   const [showResult, setShowResult] = useState(false);
-  const [showConfetti, setShowConfetti] = useState(true);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   const [width, height] = useWindowSize();
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
