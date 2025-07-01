@@ -359,7 +359,9 @@ export default function FormTest({ formData, setMode }: FormTestProps) {
                   ))}
                 </div>
                 <div className="keyboard-row keyboard-row-letters">
-                  {EXTRA_PATTERN_LETTERS.map((char) => (
+                  {EXTRA_PATTERN_LETTERS.filter(
+                    (patternLetter) => !letters.includes(patternLetter)
+                  ).map((char) => (
                     <button
                       key={char}
                       className="keyboard-button arabic-text"
