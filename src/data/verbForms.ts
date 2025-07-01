@@ -196,4 +196,55 @@ export const verbFormsData: VerbForm[] = [
       },
     ],
   },
+  {
+    id: "form-v",
+    formNumber: 5,
+    name: "Form V",
+    meaning: "Reflexive",
+    root: "تَفَعَّلَ",
+    hideModes: [],
+    learnSet: [
+      { tense: "past", verb: "تَفَعَّلَ" },
+      { tense: "present", verb: "يَتَفَعَّلُ" },
+      { tense: "command", verb: "تَفَعَّلْ" },
+      { tense: "verbalNoun", verb: "تَفَعُّلٌ" },
+      { tense: "doerPattern", verb: "مُتَفَعِّلٌ" },
+      { tense: "receiverPattern", verb: "مُتَفَعَّلٌ" },
+    ],
+    questionSet: [
+      {
+        baseVerb: "علم",
+        tenses: {
+          past: "تَعَلَّمَ",
+          present: "يَتَعَلَّمُ",
+          command: "تَعَلَّمْ",
+          verbalNoun: "تَعَلُّمٌ",
+          doerPattern: "مُتَعَلِّمٌ",
+          receiverPattern: "مُتَعَلَّمٌ",
+        },
+      },
+      {
+        baseVerb: "ذكر",
+        tenses: {
+          past: "تَذَكَّرَ",
+          present: "يَتَذَكَّرُ",
+          command: "تَذَكَّرْ",
+          verbalNoun: "تَذَكُّرٌ",
+          doerPattern: "مُتَذَكِّرٌ",
+          receiverPattern: "مُتَذَكَّرٌ",
+        },
+      },
+      {
+        baseVerb: "نزل",
+        tenses: {
+          past: "تَنَزَّلَ",
+          present: "يَتَنَزَّلُ",
+          command: "تَنَزَّلْ",
+          verbalNoun: "تَنَزُّلٌ",
+          doerPattern: "مُتَنَزِّلٌ",
+          receiverPattern: "مُتَنَزَّلٌ",
+        },
+      },
+    ],
+  },
 ];
