@@ -300,15 +300,6 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
                 Quit
               </button>
             </div>
-            {/* <div className="quiz-feedback-container">
-              <button
-                onClick={() => {
-                  retry();
-                }}
-              >
-                Retry
-              </button>
-            </div> */}
           </div>
         ) : (
           <div>

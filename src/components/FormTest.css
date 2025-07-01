@@ -219,3 +219,17 @@
   margin-bottom: 0.5rem;
   margin-top: 0.5rem;
 }
+
+.button-row {
+  button {
+    margin: 0.5rem;
+  }
+  .button-ghost {
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  @media (max-width: 600px) {
+    margin-top: 0.5rem;
+  }
+}
