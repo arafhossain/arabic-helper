@@ -10,6 +10,8 @@ import {
   TANWEEN_MAP,
 } from "../data/arabicCharacters";
 import { QuestionCard } from "../models/Question";
+import Confetti from "react-confetti";
+import { useWindowSize } from "@react-hook/window-size";
 
 type FormTestProps = {
   formData: VerbForm;
@@ -49,7 +51,9 @@ export default function FormTest({ formData, setMode }: FormTestProps) {
   const [userInput, setUserInput] = useState("");
   const [showAnswer, setShowAnswer] = useState(false);
   const [showResult, setShowResult] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(true);
 
+  const [width, height] = useWindowSize();
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -59,6 +63,17 @@ export default function FormTest({ formData, setMode }: FormTestProps) {
 
     setTestQuestions(GENERATED_QUESTIONS);
   }, [formData]);
+
+  useEffect(() => {
+    if (
+      showResult &&
+      testQuestions.length > 0 &&
+      score === testQuestions.length
+    ) {
+      setShowConfetti(true);
+      setTimeout(() => setShowConfetti(false), 10000);
+    }
+  }, [showResult]);
 
   const generateTest = (): TestQuestion[] => {
     const tenses = Object.keys(VerbTenseLabels) as VerbTenseKey[];
@@ -246,6 +261,14 @@ export default function FormTest({ formData, setMode }: FormTestProps) {
 
     return (
       <div className="test-container">
+        <Confetti
+          numberOfPieces={150}
+          width={width}
+          height={height}
+          recycle={false}
+          run={showConfetti}
+          initialVelocityY={5}
+        />
         {showResult ? (
           <div>
             <h2>Test Complete!</h2>

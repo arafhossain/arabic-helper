@@ -7,6 +7,8 @@ import {
   HARAKAT_VOWELS,
 } from "../data/arabicCharacters";
 import { QuestionCard } from "../models/Question";
+import Confetti from "react-confetti";
+import { useWindowSize } from "@react-hook/window-size";
 
 type FormQuizProps = {
   formData: VerbForm;
@@ -107,7 +109,9 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
   const [showResult, setShowResult] = useState(false);
   // const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
   const [showNextButton, setShowNextButton] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
 
+  const [width, height] = useWindowSize();
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -115,6 +119,17 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
 
     setQuizQuestions(GENERATED_QUESTIONS);
   }, [formData]);
+
+  useEffect(() => {
+    if (
+      showResult &&
+      quizQuestions.length > 0 &&
+      score === quizQuestions.length
+    ) {
+      setShowConfetti(true);
+      setTimeout(() => setShowConfetti(false), 10000);
+    }
+  }, [showResult]);
 
   const generateQuiz = (): QuizQuestion[] => {
     const tenses = Object.keys(VerbTenseLabels) as VerbTenseKey[];
@@ -223,6 +238,14 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
 
     return (
       <div className="quiz-container">
+        <Confetti
+          numberOfPieces={150}
+          width={width}
+          height={height}
+          recycle={false}
+          run={showConfetti}
+          initialVelocityY={5}
+        />
         {!showResult && (
           <button
             className="quit-button top-right"
