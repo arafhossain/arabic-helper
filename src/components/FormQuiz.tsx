@@ -322,9 +322,13 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
               {currentQuestionData.choices.map((choice, idx) => (
                 <button
                   key={idx}
-                  onClick={() =>
-                    handleAnswerClick(choice, currentQuestionData.correctAnswer)
-                  }
+                  onClick={(e) => {
+                    (e.target as HTMLButtonElement).blur();
+                    handleAnswerClick(
+                      choice,
+                      currentQuestionData.correctAnswer
+                    );
+                  }}
                   className={`${
                     selectedAnswer
                       ? choice === currentQuestionData.correctAnswer

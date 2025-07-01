@@ -104,6 +104,9 @@
   background-color: var(--primary-color);
   color: white;
 }
+.options button:focus {
+  outline: none;
+}
 
 .options button.correct {
   background-color: #d4edda;
