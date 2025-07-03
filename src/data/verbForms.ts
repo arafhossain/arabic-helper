@@ -352,4 +352,55 @@ export const verbFormsData: VerbForm[] = [
       },
     ],
   },
+  {
+    id: "form-viii",
+    formNumber: 8,
+    name: "Form VIII",
+    meaning: "Reflexivity",
+    root: "اِفْتَعَلَ",
+    hideModes: [],
+    learnSet: [
+      { tense: "past", verb: "اِفْتَعَلَ" },
+      { tense: "present", verb: "يَفْتَعِلُ" },
+      { tense: "command", verb: "اِفْتَعِلْ" },
+      { tense: "verbalNoun", verb: "اِفْتِعَالٌ" },
+      { tense: "doerPattern", verb: "مُفْتَعِلٌ" },
+      { tense: "receiverPattern", verb: "مُفْتَعَلٌ" },
+    ],
+    questionSet: [
+      {
+        baseVerb: "عدل",
+        tenses: {
+          past: "اِعْتَدَلَ",
+          present: "يَعْتَدِلُ",
+          command: "اِعْتَدِلْ",
+          verbalNoun: "اِعْتِدَالٌ",
+          doerPattern: "مُعْتَدِلٌ",
+          receiverPattern: "مُعْتَدَلٌ",
+        },
+      },
+      {
+        baseVerb: "رفع",
+        tenses: {
+          past: "اِرْتَفَعَ",
+          present: "يَرْتَفِعُ",
+          command: "اِرْتَفِعْ",
+          verbalNoun: "اِرْتِفَاعٌ",
+          doerPattern: "مُرْتَفِعٌ",
+          receiverPattern: "مُرْتَفَعٌ",
+        },
+      },
+      {
+        baseVerb: "عزل",
+        tenses: {
+          past: "اِعْتَزَلَ",
+          present: "يَعْتَزِلُ",
+          command: "اِعْتَزِلْ",
+          verbalNoun: "اِعْتِزَالٌ",
+          doerPattern: "مُعْتَزِلٌ",
+          receiverPattern: "مُعْتَزَلٌ",
+        },
+      },
+    ],
+  },
 ];
