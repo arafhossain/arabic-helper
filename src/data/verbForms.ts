@@ -301,4 +301,55 @@ export const verbFormsData: VerbForm[] = [
       },
     ],
   },
+  {
+    id: "form-vii",
+    formNumber: 7,
+    name: "Form VII",
+    meaning: "Passivity",
+    root: "اِنْفَعَلَ",
+    hideModes: [],
+    learnSet: [
+      { tense: "past", verb: "اِنْفَعَلَ" },
+      { tense: "present", verb: "يَنْفَعِلُ" },
+      { tense: "command", verb: "اِنْفَعِلْ" },
+      { tense: "verbalNoun", verb: "اِنْفِعَالٌ" },
+      { tense: "doerPattern", verb: "مُنْفَعِلٌ" },
+      { tense: "receiverPattern", verb: "مُنْفَعَلٌ" },
+    ],
+    questionSet: [
+      {
+        baseVerb: "قلب",
+        tenses: {
+          past: "اِنْقَلَبَ",
+          present: "يَنْقَلِبُ",
+          command: "اِنْقَلِبْ",
+          verbalNoun: "اِنْقِلَابٌ",
+          doerPattern: "مُنْقَلِبٌ",
+          receiverPattern: "مُنْقَلَبٌ",
+        },
+      },
+      {
+        baseVerb: "سلخ",
+        tenses: {
+          past: "اِنْسَلَخَ",
+          present: "يَنْسَلِخُ",
+          command: "اِنْسَلِخْ",
+          verbalNoun: "اِنْسِلَاخٌ",
+          doerPattern: "مُنْسَلِخٌ",
+          receiverPattern: "مُنْسَلَخٌ",
+        },
+      },
+      {
+        baseVerb: "بجس",
+        tenses: {
+          past: "اِنْبَجَسَ",
+          present: "يَنْبَجِسُ",
+          command: "اِنْبَجِسْ",
+          verbalNoun: "اِنْبِجَاسٌ",
+          doerPattern: "مُنْبَجِسٌ",
+          receiverPattern: "مُنْبَجَسٌ",
+        },
+      },
+    ],
+  },
 ];
