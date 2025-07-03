@@ -446,4 +446,55 @@ export const verbFormsData: VerbForm[] = [
       },
     ],
   },
+  {
+    id: "form-x",
+    formNumber: 10,
+    name: "Form X",
+    meaning: "Seeking",
+    root: "اِسْتَفْعَلَ",
+    hideModes: [],
+    learnSet: [
+      { tense: "past", verb: "اِسْتَفْعَلَ" },
+      { tense: "present", verb: "يَسْتَفْعِلُ" },
+      { tense: "command", verb: "اِسْتَفْعِلْ" },
+      { tense: "verbalNoun", verb: "اِسْتِفْعَالٌ" },
+      { tense: "doerPattern", verb: "مُسْتَفْعِلٌ" },
+      { tense: "receiverPattern", verb: "مُسْتَفْعَلٌ" },
+    ],
+    questionSet: [
+      {
+        baseVerb: "عجل",
+        tenses: {
+          past: "اِسْتَعْجَلَ",
+          present: "يَسْتَعْجِلُ",
+          command: "اِسْتَعْجِلْ",
+          verbalNoun: "اِسْتِعْجَالٌ",
+          doerPattern: "مُسْتَعْجِلٌ",
+          receiverPattern: "مُسْتَعْجَلٌ",
+        },
+      },
+      {
+        baseVerb: "نصر",
+        tenses: {
+          past: "اِسْتَنْصَرَ",
+          present: "يَسْتَنْصِرُ",
+          command: "اِسْتَنْصِرْ",
+          verbalNoun: "اِسْتِنْصَارٌ",
+          doerPattern: "مُسْتَنْصِرٌ",
+          receiverPattern: "مُسْتَنْصَرٌ",
+        },
+      },
+      {
+        baseVerb: "طعم",
+        tenses: {
+          past: "اِسْتَطْعَمَ",
+          present: "يَسْتَطْعِمُ",
+          command: "اِسْتَطْعِمْ",
+          verbalNoun: "اِسْتِطْعَامٌ",
+          doerPattern: "مُسْتَطْعِمٌ",
+          receiverPattern: "مُسْتَطْعَمٌ",
+        },
+      },
+    ],
+  },
 ];
