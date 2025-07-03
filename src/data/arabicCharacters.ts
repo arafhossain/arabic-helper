@@ -15,6 +15,7 @@ export const EXTRA_PATTERN_LETTERS = [
   "ي",
   "ن",
   "ا",
+  "س",
   "م",
   "ة",
   "ء",
