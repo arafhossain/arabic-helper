@@ -403,4 +403,47 @@ export const verbFormsData: VerbForm[] = [
       },
     ],
   },
+  {
+    id: "form-ix",
+    formNumber: 9,
+    name: "Form IX",
+    meaning: "Passive (Colors and Defects)",
+    root: "اِفْعَلَّ",
+    hideModes: [],
+    learnSet: [
+      { tense: "past", verb: "اِفْعَلَّ" },
+      { tense: "present", verb: "يَفْعَلُّ" },
+      { tense: "verbalNoun", verb: "اِفْعِلَالٌ" },
+      { tense: "doerPattern", verb: "مُفْعَلٌّ" },
+    ],
+    questionSet: [
+      {
+        baseVerb: "بيض",
+        tenses: {
+          past: "اِبْيَضَّ",
+          present: "يَبْيَضُّ",
+          verbalNoun: "اِبْيِضَاضٌ",
+          doerPattern: "مُبْيَضٌّ",
+        },
+      },
+      {
+        baseVerb: "حمر",
+        tenses: {
+          past: "اِحْمَرَّ",
+          present: "يَحْمَرُّ",
+          verbalNoun: "اِحْمِرَارٌ",
+          doerPattern: "مُحْمَرٌّ",
+        },
+      },
+      {
+        baseVerb: "عوج",
+        tenses: {
+          past: "اِعْوَجَّ",
+          present: "يَعْوَجُّ",
+          verbalNoun: "اِعْوِجَاجٌ",
+          doerPattern: "مُعْوَجٌّ",
+        },
+      },
+    ],
+  },
 ];
