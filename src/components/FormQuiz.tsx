@@ -148,19 +148,21 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
     );
 
     const generated: QuizQuestion[] = selectedquestionSet.flatMap((verbData) =>
-      tenses.map((tense) => {
-        const correct = verbData.tenses[tense];
-        const choices = generateQuizChoices(correct);
+      tenses
+        .filter((tense) => verbData.tenses[tense] !== undefined)
+        .map((tense) => {
+          const correct = verbData.tenses[tense] as string;
+          const choices = generateQuizChoices(correct);
 
-        const QUIZ_QUESTION: QuizQuestion = {
-          baseVerb: verbData.baseVerb,
-          tense,
-          correctAnswer: correct,
-          choices,
-        };
+          const QUIZ_QUESTION: QuizQuestion = {
+            baseVerb: verbData.baseVerb,
+            tense,
+            correctAnswer: correct,
+            choices,
+          };
 
-        return QUIZ_QUESTION;
-      })
+          return QUIZ_QUESTION;
+        })
     );
 
     for (let i = generated.length - 1; i > 0; i--) {

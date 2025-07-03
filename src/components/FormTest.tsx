@@ -92,17 +92,19 @@ export default function FormTest({ formData, setMode }: FormTestProps) {
     );
 
     const generated: TestQuestion[] = selectedquestionSet.flatMap((verbData) =>
-      tenses.map((tense) => {
-        const correct = verbData.tenses[tense];
+      tenses
+        .filter((tense) => verbData.tenses[tense] !== undefined)
+        .map((tense) => {
+          const correct = verbData.tenses[tense] as string;
 
-        const TEST_QUESTION: TestQuestion = {
-          baseVerb: verbData.baseVerb,
-          tense,
-          correctAnswer: correct,
-        };
+          const TEST_QUESTION: TestQuestion = {
+            baseVerb: verbData.baseVerb,
+            tense,
+            correctAnswer: correct,
+          };
 
-        return TEST_QUESTION;
-      })
+          return TEST_QUESTION;
+        })
     );
 
     for (let i = generated.length - 1; i > 0; i--) {

@@ -3,9 +3,9 @@ export interface QuestionCard {
   tenses: {
     past: string;
     present: string;
-    command: string;
+    command?: string;
     verbalNoun: string;
     doerPattern: string;
-    receiverPattern: string;
+    receiverPattern?: string;
   };
 }
