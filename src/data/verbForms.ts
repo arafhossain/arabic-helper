@@ -250,4 +250,55 @@ export const verbFormsData: VerbForm[] = [
       },
     ],
   },
+  {
+    id: "form-vi",
+    formNumber: 6,
+    name: "Form VI",
+    meaning: "Mutuality",
+    root: "تَفَاعَلَ",
+    hideModes: [],
+    learnSet: [
+      { tense: "past", verb: "تَفَاعَلَ" },
+      { tense: "present", verb: "يَتَفَاعَلُ" },
+      { tense: "command", verb: "تَفَاعَلْ" },
+      { tense: "verbalNoun", verb: "تَفَاعُلٌ" },
+      { tense: "doerPattern", verb: "مُتَفَاعِلٌ" },
+      { tense: "receiverPattern", verb: "مُتَفَاعَلٌ" },
+    ],
+    questionSet: [
+      {
+        baseVerb: "درس",
+        tenses: {
+          past: "تَدَارَسَ",
+          present: "يَتَدَارَسُ",
+          command: "تَدَارَسْ",
+          verbalNoun: "تَدَارُسٌ",
+          doerPattern: "مُتَدَارِسٌ",
+          receiverPattern: "مُتَدَارَسٌ",
+        },
+      },
+      {
+        baseVerb: "سبق",
+        tenses: {
+          past: "تَسَابَقَ",
+          present: "يَتَسَابَقُ",
+          command: "تَسَابَقْ",
+          verbalNoun: "تَسَابُقٌ",
+          doerPattern: "مُتَسَابِقٌ",
+          receiverPattern: "مُتَسَابَقٌ",
+        },
+      },
+      {
+        baseVerb: "بغض",
+        tenses: {
+          past: "تَبَاغَضَ",
+          present: "يَتَبَاغَضُ",
+          command: "تَبَاغَضْ",
+          verbalNoun: "تَبَاغُضٌ",
+          doerPattern: "مُتَبَاغِضٌ",
+          receiverPattern: "مُتَبَاغَضٌ",
+        },
+      },
+    ],
+  },
 ];
