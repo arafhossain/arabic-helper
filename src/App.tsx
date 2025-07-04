@@ -4,6 +4,7 @@ import VerbForms from "./components/VerbForms";
 import Home from "./components/Home";
 import FormDetail from "./components/FormDetail";
 import "./theme.css";
+import QuizBuilder from "./components/QuizBuilder";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/verb-forms" element={<VerbForms />} />
         <Route path="/verb-forms/:formId" element={<FormDetail />} />
+        <Route path="/verb-forms/quiz-builder" element={<QuizBuilder />} />
       </Routes>
     </BrowserRouter>
   );

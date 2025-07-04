@@ -22,6 +22,9 @@ const VerbForms = () => {
               <button className="form-button">{verbForm.name}</button>
             </Link>
           ))}
+          <Link to={`/verb-forms/quiz-builder`}>
+            <button className="form-button">Quiz Builder</button>
+          </Link>
         </div>
       </div>
     </div>
