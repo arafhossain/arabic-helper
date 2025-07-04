@@ -1,0 +1,64 @@
+.dropdown-container {
+  position: relative;
+  margin-top: 1rem;
+}
+
+.dropdown-toggle {
+  color: black;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: white;
+  cursor: pointer;
+  font-weight: 600;
+  width: 100%;
+  text-align: left;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  border: 1px solid #ccc;
+  background: white;
+  border-radius: 8px;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-option {
+  display: block;
+  padding: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.dropdown-option input {
+  margin-right: 0.5rem;
+}
+
+.quiz-summary {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.start-button {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.start-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
