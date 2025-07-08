@@ -31,15 +31,22 @@ export default function QuizBuilder() {
     return sum + (form?.count || 0);
   }, 0);
 
+  const selectedFormNames = selectedForms
+    .map(
+      (option) => allForms.filter((formData) => formData.id === option)[0].name
+    )
+    .join(", ");
+
+  const buttonLabel =
+    selectedFormNames.length > 0 ? selectedFormNames : "Select Forms";
+
   return (
     <div className="quiz-builder">
       <h2>Build Your Quiz</h2>
 
       <div className="dropdown-container">
         <button onClick={() => setOpen(!open)} className="dropdown-toggle">
-          {selectedForms.length > 0
-            ? `Selected (${selectedForms.length})`
-            : "Select Forms"}
+          {buttonLabel}
         </button>
 
         {open && (
