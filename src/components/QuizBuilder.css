@@ -23,6 +23,26 @@
   margin-bottom: 0.5rem;
 }
 
+.dropdown-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.dropdown-controls button {
+  background-color: transparent;
+  border: none;
+  color: var(--primary-color);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-controls button:hover {
+  background-color: #f3f3f3;
+}
 .dropdown-menu {
   position: absolute;
   top: 100%;

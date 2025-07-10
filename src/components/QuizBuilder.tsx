@@ -31,14 +31,28 @@ export default function QuizBuilder() {
     return sum + (form?.count || 0);
   }, 0);
 
-  const selectedFormNames = selectedForms
-    .map(
-      (option) => allForms.filter((formData) => formData.id === option)[0].name
-    )
-    .join(", ");
+  const maxVisible = 2;
 
-  const buttonLabel =
-    selectedFormNames.length > 0 ? selectedFormNames : "Select Forms";
+  const selectedFormNames = selectedForms.map(
+    (option) => allForms.filter((formData) => formData.id === option)[0].name
+  );
+
+  let buttonLabel = "Select Forms";
+  if (selectedFormNames.length === 1) {
+    buttonLabel = selectedFormNames[0];
+  } else if (selectedFormNames.length === 2) {
+    buttonLabel = selectedFormNames.join(", ");
+  } else if (selectedFormNames.length > 2) {
+    buttonLabel = `${selectedFormNames.slice(0, maxVisible).join(", ")} +${
+      selectedForms.length - maxVisible
+    } more`;
+  }
+
+  const allFormIds = allForms.map((option) => option.id);
+
+  const handleSelectAll = () => setSelectedForms(allFormIds);
+
+  const handleDeselectAll = () => setSelectedForms([]);
 
   return (
     <div className="quiz-builder">
@@ -49,10 +63,28 @@ export default function QuizBuilder() {
           {buttonLabel}
         </button>
 
-        {open && (
+        {/* {open && (
           <div className="dropdown-menu">
             {allForms.map((form) => (
               <label key={form.id} className="dropdown-option">
+                <input
+                  type="checkbox"
+                  checked={selectedForms.includes(form.id)}
+                  onChange={() => toggleForm(form.id)}
+                />
+                {form.name}
+              </label>
+            ))}
+          </div>
+        )} */}
+        {open && (
+          <div className="dropdown-menu">
+            <div className="dropdown-controls">
+              <button onClick={handleSelectAll}>Select All</button>
+              <button onClick={handleDeselectAll}>Deselect All</button>
+            </div>
+            {allForms.map((form) => (
+              <label key={form.id}>
                 <input
                   type="checkbox"
                   checked={selectedForms.includes(form.id)}
