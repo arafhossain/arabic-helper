@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
 import "./QuizBuilderForm.css";
+import { verbFormsData } from "../data/verbForms";
 
-const allForms = [
-  { id: "form-i", name: "Form I", count: 6 },
-  { id: "form-ii", name: "Form II", count: 6 },
-  { id: "form-iii", name: "Form III", count: 6 },
-  { id: "form-iv", name: "Form IV", count: 6 },
-  { id: "form-v", name: "Form V", count: 6 },
-  { id: "form-vi", name: "Form VI", count: 6 },
-  { id: "form-vii", name: "Form VII", count: 6 },
-  { id: "form-viii", name: "Form VIII", count: 6 },
-  { id: "form-ix", name: "Form IX", count: 4 },
-  { id: "form-x", name: "Form X", count: 6 },
-];
+const allForms = verbFormsData
+  .map((formData) => {
+    return {
+      id: formData.id,
+      name: formData.name,
+      count: formData.learnSet.length,
+    };
+  })
+  .filter((formData) => formData.id !== "form-i");
+
 type QuizBuilderFormProps = {
   selectedForms: string[];
   setSelectedForms: React.Dispatch<React.SetStateAction<string[]>>;

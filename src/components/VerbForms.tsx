@@ -18,7 +18,7 @@ const VerbForms = () => {
 
         <div className="form-button-container">
           {verbFormsData.map((verbForm) => (
-            <Link to={`/verb-forms/${verbForm.id}`}>
+            <Link to={`/verb-forms/${verbForm.id}`} key={verbForm.id}>
               <button className="form-button">{verbForm.name}</button>
             </Link>
           ))}

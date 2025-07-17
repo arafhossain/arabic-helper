@@ -15,14 +15,15 @@ type FormQuizProps = {
   setMode: (mode: ExerciseMode) => void;
 };
 
-type QuizQuestion = {
+export type QuizQuestion = {
   baseVerb: string;
   tense: VerbTenseKey;
   correctAnswer: string;
   choices: string[];
+  form: string;
 };
 
-type AnswerData = {
+export type AnswerData = {
   baseVerb: string;
   tense: VerbTenseKey;
   correct: string;
@@ -32,7 +33,7 @@ type AnswerData = {
 
 const NUMBER_OF_VERBS_USED = 2;
 
-function generateQuizChoices(correct: string): string[] {
+export function generateQuizChoices(correct: string): string[] {
   const distractors = generateTashkeelVariants(correct);
   const choices = [...distractors, correct];
 
@@ -159,6 +160,7 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
             tense,
             correctAnswer: correct,
             choices,
+            form: formData.name,
           };
 
           return QUIZ_QUESTION;
