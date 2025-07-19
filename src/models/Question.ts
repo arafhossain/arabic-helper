@@ -1,5 +1,6 @@
 export interface QuestionCard {
   baseVerb: string;
+  form?: string;
   tenses: {
     past: string;
     present: string;

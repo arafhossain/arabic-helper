@@ -1,107 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
-import { VerbForm, VerbTenseLabels, VerbTenseKey } from "../models/Verb";
-import { ExerciseMode } from "./FormDetail";
-import "./FormQuiz.css";
-import {
-  HARAKAT_VOWELS_WITH_SUKOON,
-  HARAKAT_VOWELS,
-} from "../data/arabicCharacters";
-import { QuestionCard } from "../models/Question";
+import { AnswerData, generateQuizChoices, QuizQuestion } from "./FormQuiz";
 import Confetti from "react-confetti";
 import { useWindowSize } from "@react-hook/window-size";
+import { VerbTenseKey, VerbTenseLabels } from "../models/Verb";
+import { ExerciseMode } from "./FormDetail";
+import { QuestionCard } from "../models/Question";
+import { verbFormsData } from "../data/verbForms";
 
-type FormQuizProps = {
-  formData: VerbForm;
-  setMode: (mode: ExerciseMode) => void;
+type CustomQuizProps = {
+  selectedForms: string[];
+  numQuestions: number;
+  onQuit: () => void;
 };
 
-export type QuizQuestion = {
-  baseVerb: string;
-  tense: VerbTenseKey;
-  correctAnswer: string;
-  choices: string[];
-  form: string;
-};
+const NUMBER_OF_VERBS_USED = 1;
 
-export type AnswerData = {
-  baseVerb: string;
-  tense: VerbTenseKey;
-  correct: string;
-  userAnswer: string;
-  isCorrect: boolean;
-};
-
-const NUMBER_OF_VERBS_USED = 2;
-
-export function generateQuizChoices(correct: string): string[] {
-  const distractors = generateTashkeelVariants(correct);
-  const choices = [...distractors, correct];
-
-  for (let i = choices.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [choices[i], choices[j]] = [choices[j], choices[i]];
-  }
-
-  return choices;
-}
-
-function generateTashkeelVariants(correct: string, numVariants = 3): string[] {
-  const variants = new Set<string>();
-  const SHADDA = "ّ";
-
-  let attempts = 0;
-  const MAX_ATTEMPTS = 10 * numVariants;
-
-  while (variants.size < numVariants && attempts < MAX_ATTEMPTS) {
-    let chars = [...correct.split("")];
-
-    // Collect indexes of harakat
-    const harakahIndexes = chars
-      .map((char, idx) =>
-        HARAKAT_VOWELS_WITH_SUKOON.includes(char) ? idx : null
-      )
-      .filter((x): x is number => x !== null);
-
-    if (harakahIndexes.length === 0) break;
-
-    // Choose index of random harakat
-    const randIndex =
-      harakahIndexes[Math.floor(Math.random() * harakahIndexes.length)];
-    const current = chars[randIndex];
-
-    // Determine if the harakah follows a shadda
-    const followsShadda = chars[randIndex - 1] === SHADDA;
-
-    // Filter harakat accordingly
-    const options = followsShadda
-      ? HARAKAT_VOWELS.filter((h) => h !== current)
-      : HARAKAT_VOWELS_WITH_SUKOON.filter((h) => h !== current);
-
-    // If no valid replacement exists, skip
-    if (options.length === 0) {
-      attempts++;
-      continue;
-    }
-
-    // Replace the harakah
-    const newHarakah = options[Math.floor(Math.random() * options.length)];
-    chars[randIndex] = newHarakah;
-
-    const variant = chars.join("");
-
-    // Check to ensure its not the same as correct answer, add to set
-    if (variant !== correct) {
-      variants.add(variant);
-      attempts = 0;
-    } else {
-      attempts++;
-    }
-  }
-
-  return Array.from(variants);
-}
-
-export default function FormQuiz({ formData, setMode }: FormQuizProps) {
+export default function CustomQuiz({
+  selectedForms,
+  numQuestions,
+  onQuit,
+}: CustomQuizProps) {
   const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>([]);
   const [userAnswers, setUserAnswers] = useState<AnswerData[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -117,9 +35,10 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
 
   useEffect(() => {
     const GENERATED_QUESTIONS = generateQuiz();
+    console.log("Question: ", GENERATED_QUESTIONS);
 
     setQuizQuestions(GENERATED_QUESTIONS);
-  }, [formData]);
+  }, []);
 
   useEffect(() => {
     if (
@@ -135,32 +54,98 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
   const generateQuiz = (): QuizQuestion[] => {
     const tenses = Object.keys(VerbTenseLabels) as VerbTenseKey[];
 
+    const QUESTION_POOL = verbFormsData
+      .filter(
+        (verbFormData) =>
+          verbFormData.id !== "form-i" &&
+          selectedForms.includes(verbFormData.id)
+      )
+      .map((formData) =>
+        getRandomSubset(
+          formData.questionSet,
+          NUMBER_OF_VERBS_USED,
+          formData.name
+        )
+      )
+      .flat();
+
     function getRandomSubset(
       arr: QuestionCard[],
-      count: number
+      count: number,
+      form: string
     ): QuestionCard[] {
       const shuffled = [...arr].sort(() => Math.random() - 0.5);
-      return shuffled.slice(0, count);
+      return shuffled.slice(0, count).map((question) => {
+        return { ...question, form };
+      });
     }
 
-    const selectedquestionSet = getRandomSubset(
-      formData.questionSet,
-      NUMBER_OF_VERBS_USED
-    );
+    function getSimilarChoices(
+      verb: string,
+      tense: VerbTenseKey,
+      form: string,
+      correct: string
+    ): string[] {
+      let CHOICES = verbFormsData
+        .filter((formData) => formData.id !== "form-i" && formData.id !== form)
+        .map((formData) => {
+          const BASE_FORM = formData.learnSet.filter(
+            (learnCard) => learnCard.tense === tense
+          )[0];
 
-    const generated: QuizQuestion[] = selectedquestionSet.flatMap((verbData) =>
+          if (BASE_FORM) {
+            const VERB = BASE_FORM.verb;
+            const BROKEN_VERB = VERB.split("");
+
+            const FIRST_ROOT_IDX = BROKEN_VERB.indexOf("ف");
+            const SECOND_ROOT_IDX = BROKEN_VERB.indexOf("ع");
+            const THIRD_ROOT_IDX = BROKEN_VERB.indexOf("ل");
+
+            const [FIRST_VERB_ROOT, SECOND_VERB_ROOT, THIRD_VERB_ROOT] =
+              verb.split("");
+
+            BROKEN_VERB[FIRST_ROOT_IDX] = FIRST_VERB_ROOT;
+            BROKEN_VERB[SECOND_ROOT_IDX] = SECOND_VERB_ROOT;
+            BROKEN_VERB[THIRD_ROOT_IDX] = THIRD_VERB_ROOT;
+
+            return BROKEN_VERB.join("");
+          } else return "";
+        });
+
+      CHOICES = CHOICES.filter((verb) => verb !== "" && verb !== correct).slice(
+        0,
+        3
+      );
+
+      CHOICES.push(correct);
+
+      for (let i = CHOICES.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [CHOICES[i], CHOICES[j]] = [CHOICES[j], CHOICES[i]];
+      }
+
+      return CHOICES;
+    }
+
+    const generated: QuizQuestion[] = QUESTION_POOL.flatMap((verbData) =>
       tenses
         .filter((tense) => verbData.tenses[tense] !== undefined)
-        .map((tense) => {
+        .map((tense, idx) => {
           const correct = verbData.tenses[tense] as string;
-          const choices = generateQuizChoices(correct);
+
+          const choices = getSimilarChoices(
+            verbData.baseVerb,
+            tense,
+            verbData.form ?? "",
+            correct
+          );
 
           const QUIZ_QUESTION: QuizQuestion = {
             baseVerb: verbData.baseVerb,
             tense,
             correctAnswer: correct,
             choices,
-            form: formData.name,
+            form: verbData.form ?? "",
           };
 
           return QUIZ_QUESTION;
@@ -171,6 +156,8 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
       const j = Math.floor(Math.random() * (i + 1));
       [generated[i], generated[j]] = [generated[j], generated[i]];
     }
+
+    console.log("Gen ques: ", generated);
 
     return generated;
   };
@@ -238,6 +225,9 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
     return <p>Loading quiz ...</p>;
   } else {
     const currentQuestionData: QuizQuestion = quizQuestions[currentIndex];
+
+    console.log("Current question data: ", currentQuestionData);
+
     const tenseLabel = VerbTenseLabels[currentQuestionData.tense];
 
     return (
@@ -251,10 +241,7 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
           initialVelocityY={5}
         />
         {!showResult && (
-          <button
-            className="quit-button top-right"
-            onClick={() => setMode("default")}
-          >
+          <button className="quit-button top-right" onClick={() => onQuit()}>
             Quit
           </button>
         )}
@@ -321,7 +308,7 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
               <button
                 className="button-ghost"
                 onClick={() => {
-                  setMode("default");
+                  onQuit();
                 }}
               >
                 Quit
@@ -330,12 +317,14 @@ export default function FormQuiz({ formData, setMode }: FormQuizProps) {
           </div>
         ) : (
           <div>
-            <h1 style={{ marginBottom: "6px" }}>{formData.name}</h1>
+            {/* <h1 style={{ marginBottom: "6px" }}>{formData.name}</h1> */}
             <span style={{ color: "gray", fontSize: "1.2rem" }}>
               Question {currentIndex + 1} of {quizQuestions.length}
             </span>
             <h2>
-              {`What is the ${tenseLabel.toUpperCase()} form of `}
+              {`What is the ${
+                currentQuestionData.form
+              } ${tenseLabel.toUpperCase()} form of `}
               <span
                 className="arabic-text"
                 style={{ fontSize: "2rem", fontWeight: "normal" }}
