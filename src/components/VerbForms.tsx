@@ -14,7 +14,7 @@ const VerbForms = () => {
       />
       <div style={{ textAlign: "center", marginTop: "2rem" }}>
         <h2>Verb Forms</h2>
-        <p>Select a verb form to begin:</p>
+        <p>Select a verb forms to begin:</p>
 
         <div className="form-button-container">
           {verbFormsData.map((verbForm) => (
@@ -22,9 +22,20 @@ const VerbForms = () => {
               <button className="form-button">{verbForm.name}</button>
             </Link>
           ))}
-          <Link to={`/verb-forms/quiz-builder`}>
-            <button className="form-button">Quiz Builder</button>
-          </Link>
+        </div>
+
+        <hr className="section-divider" />
+
+        <div className="tools-section">
+          <h3 className="tools-header">Tools</h3>
+          <div className="form-button-container">
+            <Link to={`/verb-forms/quiz-builder`}>
+              <button className="form-button">Quiz Builder</button>
+            </Link>
+            <Link to={`/verb-forms/reference`}>
+              <button className="form-button">Reference Chart</button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
