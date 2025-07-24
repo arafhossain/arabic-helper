@@ -14,7 +14,7 @@ const VerbForms = () => {
       />
       <div style={{ textAlign: "center", marginTop: "2rem" }}>
         <h2>Verb Forms</h2>
-        <p>Select a verb form to begin:</p>
+        <p>Select a section to begin:</p>
 
         <div className="form-button-container">
           {verbFormsData.map((verbForm) => (
@@ -24,6 +24,9 @@ const VerbForms = () => {
           ))}
           <Link to={`/verb-forms/quiz-builder`}>
             <button className="form-button">Quiz Builder</button>
+          </Link>
+          <Link to={`/verb-forms/reference`}>
+            <button className="form-button">Reference Chart</button>
           </Link>
         </div>
       </div>

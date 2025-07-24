@@ -1,0 +1,27 @@
+.reference-table-wrapper {
+  padding: 1rem 1rem;
+}
+
+.reference-table-container {
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background-color: #fafafa;
+  -webkit-overflow-scrolling: touch;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.reference-table {
+  min-width: 600px;
+  border-collapse: collapse;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.reference-table th,
+.reference-table td {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  text-align: center;
+  white-space: nowrap;
+}
