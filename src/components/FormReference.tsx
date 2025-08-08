@@ -26,6 +26,7 @@ export default function FormReference() {
             <thead>
               <tr>
                 <th>Form</th>
+                <th>Meaning</th>
                 <th>Past</th>
                 <th>Present</th>
                 <th>Command</th>
@@ -35,17 +36,20 @@ export default function FormReference() {
               </tr>
             </thead>
             <tbody>
-              {verbFormsData.map((form) => (
-                <tr key={form.id}>
-                  <td>{form.name}</td>
-                  <td>{lookup(form, "past")}</td>
-                  <td>{lookup(form, "present")}</td>
-                  <td>{lookup(form, "command")}</td>
-                  <td>{lookup(form, "verbalNoun")}</td>
-                  <td>{lookup(form, "doerPattern")}</td>
-                  <td>{lookup(form, "receiverPattern")}</td>
-                </tr>
-              ))}
+              {verbFormsData
+                .filter((form) => form.formNumber !== 1)
+                .map((form) => (
+                  <tr key={form.id}>
+                    <td>{form.name}</td>
+                    <td>{form.meaning}</td>
+                    <td>{lookup(form, "past")}</td>
+                    <td>{lookup(form, "present")}</td>
+                    <td>{lookup(form, "command")}</td>
+                    <td>{lookup(form, "verbalNoun")}</td>
+                    <td>{lookup(form, "doerPattern")}</td>
+                    <td>{lookup(form, "receiverPattern")}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

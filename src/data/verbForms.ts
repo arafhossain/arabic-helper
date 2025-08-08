@@ -254,7 +254,7 @@ export const verbFormsData: VerbForm[] = [
     id: "form-vi",
     formNumber: 6,
     name: "Form VI",
-    meaning: "Mutual or to pretend",
+    meaning: "Mutual",
     root: "تَفَاعَلَ",
     hideModes: [],
     learnSet: [
@@ -407,7 +407,7 @@ export const verbFormsData: VerbForm[] = [
     id: "form-ix",
     formNumber: 9,
     name: "Form IX",
-    meaning: "Colors or Defects",
+    meaning: "Passive (Colors or Defects)",
     root: "اِفْعَلَّ",
     hideModes: [],
     learnSet: [
@@ -450,7 +450,7 @@ export const verbFormsData: VerbForm[] = [
     id: "form-x",
     formNumber: 10,
     name: "Form X",
-    meaning: "Seeking/Requesting",
+    meaning: "Seeking / Requesting",
     root: "اِسْتَفْعَلَ",
     hideModes: [],
     learnSet: [
