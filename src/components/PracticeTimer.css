@@ -1,0 +1,40 @@
+.practice-header {
+  background-color: white;
+  border-bottom: 1px solid #ccc;
+  padding: 8px 16px;
+  z-index: 50;
+  transition: all 0.3s ease;
+}
+
+.practice-header {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 100;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.timer {
+  font-family: monospace;
+  font-size: 1.1rem;
+  color: black;
+}
+
+.end-button {
+  font-size: 0.8rem;
+  color: white;
+  background-color: var(--primary-color);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.end-button:hover {
+  background-color: var(--primary-color);
+}
