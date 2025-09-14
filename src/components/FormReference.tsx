@@ -1,25 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./FormReference.css";
 import "./FormLearn.css";
 
 import BreadcrumbBar from "./BreadcrumbBar";
 import { verbFormsData } from "../data/verbForms";
 import { VerbForm } from "../models/Verb";
+import { useOutletContext } from "react-router-dom";
+import { BreadcrumbContextType } from "./Layout";
 
 export default function FormReference() {
+  const { setBreadcrumbTrail } = useOutletContext<BreadcrumbContextType>();
+
+  useEffect(() => {
+    setBreadcrumbTrail([
+      { label: "Home", path: "/" },
+      { label: "Verb Forms", path: "/verb-forms" },
+      { label: "Reference Chart", path: null },
+    ]);
+  }, []);
+
   function lookup(form: VerbForm, tense: string): string {
     const entry = form.learnSet.find((item) => item.tense === tense);
     return entry ? entry.verb : "—";
   }
   return (
     <div>
-      <BreadcrumbBar
-        trail={[
-          { label: "Home", path: "/" },
-          { label: "Verb Forms", path: "/verb-forms" },
-          { label: "Reference Chart", path: null },
-        ]}
-      />
       <div className="reference-table-wrapper">
         <div className="reference-table-container">
           <table className="reference-table">
