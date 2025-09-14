@@ -1,17 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import BreadcrumbBar from "./BreadcrumbBar";
 import { verbFormsData } from "../data/verbForms";
 import "./VerbForm.css";
+import { BreadcrumbContextType } from "./Layout";
+import { useEffect } from "react";
 
 const VerbForms = () => {
+  const { setBreadcrumbTrail } = useOutletContext<BreadcrumbContextType>();
+
+  useEffect(() => {
+    setBreadcrumbTrail([
+      { label: "Home", path: "/" },
+      { label: "Verb Forms", path: null },
+    ]);
+  }, []);
   return (
     <div>
-      <BreadcrumbBar
-        trail={[
-          { label: "Home", path: "/" },
-          { label: "Verb Forms", path: null },
-        ]}
-      />
       <div style={{ textAlign: "center", marginTop: "2rem" }}>
         <h2>Verb Forms</h2>
         <p>Select a verb forms to begin:</p>

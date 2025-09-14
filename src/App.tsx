@@ -6,16 +6,19 @@ import FormDetail from "./components/FormDetail";
 import "./theme.css";
 import QuizBuilder from "./components/QuizBuilder";
 import FormReference from "./components/FormReference";
+import Layout from "./components/Layout";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/verb-forms" element={<VerbForms />} />
-        <Route path="/verb-forms/:formId" element={<FormDetail />} />
-        <Route path="/verb-forms/quiz-builder" element={<QuizBuilder />} />
-        <Route path="/verb-forms/reference" element={<FormReference />} />
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/verb-forms" element={<VerbForms />} />
+          <Route path="/verb-forms/:formId" element={<FormDetail />} />
+          <Route path="/verb-forms/quiz-builder" element={<QuizBuilder />} />
+          <Route path="/verb-forms/reference" element={<FormReference />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
